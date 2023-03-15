@@ -21,6 +21,6 @@ public class TestParametersRESTController {
 		model.addAttribute("frequency", frequency);
 		model.addAttribute("start_time", start_time);
 		model.addAttribute("end_time", end_time);
-		return testParametersService.establishConnection();
+		return testParametersService.establishConnection(frequency);
 	}
 }

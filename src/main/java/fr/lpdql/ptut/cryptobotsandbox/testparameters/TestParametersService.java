@@ -16,12 +16,16 @@ public class TestParametersService {
 	private String utilisateur = "root";
 	private String motDePasse = "passwordPtut";
 
-	public JSONObject establishConnection() throws SQLException {
+	public JSONObject establishConnection(String frequency) throws SQLException {
+		String nomDeLaTable = "bnb_usdt_" + frequency;
+		
 		Connection connexion = DriverManager.getConnection(url, utilisateur, motDePasse);
 		Statement statement = connexion.createStatement();
 		ResultSet resultat = statement.executeQuery("SELECT * FROM bnb_usdt_1m LIMIT 10");
 		JSONObject json = new JSONObject();
 		while (resultat.next()) {
+			JSONObject subJson = new JSONObject();
+			
 			String open_time = resultat.getString("open_time");
 			String open = resultat.getString("open");
 			String high = resultat.getString("high");
@@ -34,8 +38,7 @@ public class TestParametersService {
 			String taker_buy_base_asset_volume = resultat.getString("taker_buy_base_asset_volume");
 			String taker_buy_quote_asset_volume = resultat.getString("taker_buy_quote_asset_volume");
 			String ignore = resultat.getString("ignore");
-			JSONObject subJson = new JSONObject();
-			subJson.put("open_time", open_time);
+			
 			subJson.put("open", open);
 			subJson.put("high", high);
 			subJson.put("low", low);
@@ -53,11 +56,6 @@ public class TestParametersService {
 		statement.close();
 		connexion.close();
 		return json;
-	}
-
-	public static void main(String[] args) throws SQLException {
-		TestParametersService tps = new TestParametersService();
-		System.out.println(tps.establishConnection());
 	}
 
 }
