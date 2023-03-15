@@ -3,10 +3,7 @@
 		<title>Cryptobot Sandbox</title>
 	</head>
 	<body>
-		<div>____________________________________</div>
-		<div>APPLICATION DE CRYPTO TROP COOL</div>
-		<div>____________________________________</div>
-		
+		<h1>CRYPTOBOT SANDBOX</h1>
 		
 		<form action="/" method="post">
       		
@@ -16,11 +13,6 @@
        		 	<option value="eth">ETH</option>
       		</select>
       		<br>
-      	<!--  
-      	<input type="submit" value="Confirmer symbole" />
-		</form>
-		<form action="post">
-		-->
 		
       		<label for="interval">Intervalle</label>
       		<select name="interval">
@@ -29,20 +21,10 @@
       		</select>
       		<br>
       	
-      	<!-- 
-      	<input type="submit" value="Confirmer intervalle" />
-		</form>
-		<form action="post">
-		-->
-		
-		
       		<label for="startdate">Date début :</label>
       		<input name="startdate" type="date"/>
       		<br>
-		<!-- 
-		</form>
-		<form action="post">
-		-->
+
       		<label for="enddate">Date fin :</label>
       		<input name="enddate" type="date"/>
       		<br>
