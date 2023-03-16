@@ -1,6 +1,7 @@
 package fr.lpdql.ptut.cryptobotsandbox.testparameters;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ public class TestParametersRESTController {
 	private TestParametersService testParametersService;
 
 	@GetMapping("/getdata/{crypto}/{devise}")
-	public JSONObject bitcoinEuro(@PathVariable String crypto, @PathVariable String devise,
+	public Map<String, Map<String, String>> bitcoinEuro(@PathVariable String crypto, @PathVariable String devise,
 			@RequestParam String frequency, @RequestParam String startTime, @RequestParam String endTime) {
-		JSONObject json = new JSONObject();
+		Map<String, Map<String, String>> json = new JSONObject();
 		try {
 			json = testParametersService.getJsonFromDataBase(crypto, devise, frequency, startTime, endTime);
 		} catch (SQLException e) {

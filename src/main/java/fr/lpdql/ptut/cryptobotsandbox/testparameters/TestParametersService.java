@@ -5,35 +5,42 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TestParametersService {
 
-	private String url = "jdbc:mysql://localhost:3306/test";
-	private String utilisateur = "root";
-	private String motDePasse = "passwordPtut";
+	private String url = "jdbc:mysql://54.36.120.214:9658/www";
+	private String utilisateur = "remote";
+	private String motDePasse = "I5XFH6fKPvktFGj(";
 
-	public JSONObject getJsonFromDataBase(String crypto, String devise, String frequency, String startTime,
-			String endTime) throws SQLException {
-//		String nomDeLaTable = crypto + "_" + devise + "_" + frequency;
-		Map<String, Map<String, String>> json = new HashMap<>();
+	public Map<String, Map<String, String>> getJsonFromDataBase(String crypto, String devise, String frequency,
+			String startTime, String endTime) throws SQLException {
+		String nomDeLaTable = crypto + "_" + devise + "_" + frequency;
+		SortedMap<String, Map<String, String>> json = new TreeMap<>(new Comparator<String>() {
+			@Override
+			public int compare(String s1, String s2) {
+				return -1 * s1.compareTo(s2);
+			}
+		});
 		try (Connection connexion = DriverManager.getConnection(url, utilisateur, motDePasse);
 				Statement statement = connexion.createStatement();) {
-//			String requeteSQL = "SELECT * FROM " + nomDeLaTable + " WHERE open_time BETWEEN " + startTime + " AND "
-//			+ endTime;
-			String requeteSQL = "SELECT * FROM bnb_usdt_1m";
+			String requeteSQL = "SELECT * FROM " + nomDeLaTable + " WHERE open_time BETWEEN " + startTime + " AND "
+					+ endTime;
 			ResultSet resultat = statement.executeQuery(requeteSQL);
 			while (resultat.next()) {
+				System.out.println(resultat.getString("open_time"));
 				Map<String, String> subJson = extractDataFromSingleLine(resultat);
 				json.put(resultat.getString("open_time"), subJson);
 			}
 		}
-		return new JSONObject(json);
+		return json;
 	}
 
 	public Map<String, String> extractDataFromSingleLine(ResultSet resultat) throws SQLException {
