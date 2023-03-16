@@ -35,7 +35,6 @@ public class TestParametersService {
 					+ endTime;
 			ResultSet resultat = statement.executeQuery(requeteSQL);
 			while (resultat.next()) {
-				System.out.println(resultat.getString("open_time"));
 				Map<String, String> subJson = extractDataFromSingleLine(resultat);
 				json.put(resultat.getString("open_time"), subJson);
 			}
