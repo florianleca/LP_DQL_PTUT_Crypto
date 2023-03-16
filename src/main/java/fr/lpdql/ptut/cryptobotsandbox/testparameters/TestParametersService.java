@@ -18,7 +18,7 @@ public class TestParametersService {
 	private String utilisateur = "root";
 	private String motDePasse = "passwordPtut";
 
-	public JSONObject establishConnection(String crypto, String devise, String frequency, String startTime,
+	public JSONObject getJsonFromDataBase(String crypto, String devise, String frequency, String startTime,
 			String endTime) throws SQLException {
 //		String nomDeLaTable = crypto + "_" + devise + "_" + frequency;
 		Map<String, Map<String, String>> json = new HashMap<>();
@@ -38,26 +38,16 @@ public class TestParametersService {
 
 	public Map<String, String> extractDataFromSingleLine(ResultSet resultat) throws SQLException {
 		Map<String, String> subJson = new HashMap<>();
-		String open = resultat.getString("open");
-		subJson.put("open", open);
-		String high = resultat.getString("high");
-		subJson.put("high", high);
-		String low = resultat.getString("low");
-		subJson.put("low", low);
-		String close = resultat.getString("close");
-		subJson.put("close", close);
-		String volume = resultat.getString("volume");
-		subJson.put("volume", volume);
-		String closeTime = resultat.getString("close_time");
-		subJson.put("close_time", closeTime);
-		String quoteAssetVolume = resultat.getString("quote_asset_volume");
-		subJson.put("quote_asset_volume", quoteAssetVolume);
-		String numberOfTrades = resultat.getString("number_of_trades");
-		subJson.put("number_of_trades", numberOfTrades);
-		String takerBuyBaseAssetVolume = resultat.getString("taker_buy_base_asset_volume");
-		subJson.put("taker_buy_base_asset_volume", takerBuyBaseAssetVolume);
-		String takerBuyQuoteAssetVolume = resultat.getString("taker_buy_quote_asset_volume");
-		subJson.put("taker_buy_quote_asset_volume", takerBuyQuoteAssetVolume);
+		subJson.put("open", resultat.getString("open"));
+		subJson.put("high", resultat.getString("high"));
+		subJson.put("low", resultat.getString("low"));
+		subJson.put("close", resultat.getString("close"));
+		subJson.put("volume", resultat.getString("volume"));
+		subJson.put("close_time", resultat.getString("close_time"));
+		subJson.put("quote_asset_volume", resultat.getString("quote_asset_volume"));
+		subJson.put("number_of_trades", resultat.getString("number_of_trades"));
+		subJson.put("taker_buy_base_asset_volume", resultat.getString("taker_buy_base_asset_volume"));
+		subJson.put("taker_buy_quote_asset_volume", resultat.getString("taker_buy_quote_asset_volume"));
 		return subJson;
 	}
 }

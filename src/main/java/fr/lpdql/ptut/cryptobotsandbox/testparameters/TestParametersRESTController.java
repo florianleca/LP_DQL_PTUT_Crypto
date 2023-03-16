@@ -20,7 +20,7 @@ public class TestParametersRESTController {
 			@RequestParam String frequency, @RequestParam String startTime, @RequestParam String endTime) {
 		JSONObject json = new JSONObject();
 		try {
-			json = testParametersService.establishConnection(crypto, devise, frequency, startTime, endTime);
+			json = testParametersService.getJsonFromDataBase(crypto, devise, frequency, startTime, endTime);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
