@@ -1,29 +1,30 @@
 package fr.lpdql.ptut.cryptobotsandbox.testparameters;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
-@Controller
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
 public class TestParametersController {
 
-	@GetMapping("/")
-	public String testParameters() {
-		return "testparameters";
-	}
+	@Autowired
+	private TestParametersService testParametersService;
 
-	@PostMapping("/")
-	public String postTestParameters(@RequestParam String symbol, @RequestParam String interval,
-			@RequestParam Object startdate, @RequestParam Object enddate, Model model) {
-		model.addAttribute("symbol", symbol);
-		model.addAttribute("interval", interval);
-		model.addAttribute("startdate", startdate);
-		model.addAttribute("enddate", enddate);
-		String confirmation = "Vous avez configuré un test sur " + symbol + " avec un intervalle de " + interval
-				+ " entre le " + startdate + " et le " + enddate + ".";
-		model.addAttribute("confirmation", confirmation);
-		return "testparameters";
+	@GetMapping("/getdata/{crypto}/{devise}")
+	public Map<String, Map<String, String>> bitcoinEuro(@PathVariable String crypto, @PathVariable String devise,
+			@RequestParam String frequency, @RequestParam String startTime, @RequestParam String endTime) {
+		Map<String, Map<String, String>> json = new HashMap<>();
+		try {
+			json = testParametersService.getJsonFromDataBase(crypto, devise, frequency, startTime, endTime);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return json;
 	}
 }

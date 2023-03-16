@@ -1,0 +1,90 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "poppins", sans-serif;
+  scroll-behavior: smooth;
+  color: #f1f1f1;
+  background-color: #1e1e1e;
+}
+p {
+  font-weight: 200;
+  color: #ffffff;
+}
+
+header {
+  padding: 20px;
+  display: flex;
+  margin: 0 auto;
+}
+
+.logo {
+  color: #6c1717;
+  font-weight: bold;
+  font-size: 5em;
+  text-decoration: none;
+  margin: 0 auto;
+}
+
+.logo span {
+  color: rgb(0, 255, 13);
+}
+
+.bloc_entree {
+  top: 30%;
+  margin-left: 42%;
+  margin-right: 42%;
+  text-align: center;
+  padding: 5px 5px;
+  text-decoration: none;
+  line-height: 1.8;
+}
+
+button {
+  display: inline-block;
+  background-color: #6c1717;
+  border-radius: 1000px;
+  border: 4px double #cccccc;
+  color: #eeeeee;
+  text-align: center;
+  font-size: 12px;
+  padding: 5px;
+  width: 80px;
+  cursor: pointer;
+  margin: 5px;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #4caf50;
+}
+
+.tab {
+  color: #eeeeee;
+  padding: 0% 0%;
+}
+
+/* Style pour la table */
+#transactionTable {
+  table-layout: fixed;
+  border-collapse: collapse;
+  width: 80%;
+  margin: 0 auto;
+}
+
+#transactionTable th,
+#transactionTable td {
+  border: 1px solid #ffffff;
+  padding: 8px;
+  text-align: left;
+}
+
+#transactionTable th {
+  background-color: #6c1717;
+}
+
+/* Style pour les cellules */
+#transactionTable td {
+  font-size: 14px;
+  color: #ffffff;
+}
