@@ -18,6 +18,11 @@ header {
   margin: 0 auto;
 }
 
+select, input {
+  width: 110px;
+  text-align: center;
+}
+
 .logo {
   color: #6c1717;
   font-weight: bold;
@@ -40,6 +45,11 @@ header {
   line-height: 1.8;
 }
 
+#parameters {
+  text-align: right;
+  padding: 3%;
+
+}
 button {
   display: inline-block;
   background-color: #6c1717;

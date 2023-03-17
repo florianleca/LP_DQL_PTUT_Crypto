@@ -21,26 +21,41 @@
 
     <fieldset class="bloc_entree">
       <legend>Paramètres d'entrée</legend>
-      <label for="symbole">Symbole :</label>
-      <select id="symbole" name="symbole">
-        <option value="btc">BTC</option>
-        <option value="eth">ETH</option>
-      </select>
-      <br />
-      <label for="frequency">Intervalle :</label>
-      <select id="frequency" name="frequency">
-        <option value="1h">1 heure</option>
-        <option value="1m">1 minute</option>
-      </select>
-      <br />
 
-      <label for="startTime">Date début :</label>
-      <input id="startTime" name="startTime" type="date" value="2023-02-01" />
-      <br />
+      <div id="parameters">
+        <label for="symbole">Symbole : </label>
+        <select id="symbole" name="symbole">
+          <option value="btc">BTC</option>
+          <option value="eth">ETH</option>
+        </select>
 
-      <label for="endTime">Date fin :</label>
-      <input id="endTime" name="endTime" type="date" value="2023-02-10"/>
-      <br />
+        <br />
+
+        <label for="devise">Devise : </label>
+        <select id="devise" name ="devise" disabled>
+          <option value="usdt">USDT</option>
+        </select>
+
+        <br />
+
+        <label for="frequency">Intervalle : </label>
+        <select id="frequency" name="frequency">
+          <option value="1h">1 heure</option>
+          <option value="1m">1 minute</option>
+        </select>
+
+        <br />
+
+        <label for="startTime">Date début : </label>
+        <input id="startTime" name="startTime" type="date" value="2023-02-01" />
+
+        <br />
+
+        <label for="endTime">Date fin : </label>
+        <input id="endTime" name="endTime" type="date" value="2023-02-28" />
+      </div>
+      
+
       <button type="button" id="btnSubmit">Submit</button>
     </fieldset>
     <br />

@@ -2,6 +2,7 @@ package fr.lpdql.ptut.cryptobotsandbox.testparameters;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,11 @@ public class TestParametersService {
 	private String url = "jdbc:mysql://54.36.120.214:9658/www";
 	private String utilisateur = "remote";
 	private String motDePasse = "I5XFH6fKPvktFGj(";
+	private Connection connection;
+
+	public TestParametersService() throws SQLException {
+		connection = DriverManager.getConnection(url, utilisateur, motDePasse);
+	}
 
 	public Map<String, Map<String, String>> getJsonFromDataBase(String crypto, String devise, String frequency,
 			String startTime, String endTime) throws SQLException {
@@ -29,17 +35,20 @@ public class TestParametersService {
 				return -1 * s1.compareTo(s2);
 			}
 		});
-		try (Connection connexion = DriverManager.getConnection(url, utilisateur, motDePasse);
-				Statement statement = connexion.createStatement();) {
-			String requeteSQL = "SELECT * FROM " + nomDeLaTable + " WHERE open_time BETWEEN " + startTime + " AND "
-					+ endTime;
-			ResultSet resultat = statement.executeQuery(requeteSQL);
-			while (resultat.next()) {
-				Map<String, String> subJson = extractDataFromSingleLine(resultat);
-				json.put(resultat.getString("open_time"), subJson);
-			}
+		ResultSet resultat = executeDataBaseQuery(nomDeLaTable, startTime, endTime);
+		while (resultat.next()) {
+			Map<String, String> subJson = extractDataFromSingleLine(resultat);
+			json.put(resultat.getString("open_time"), subJson);
 		}
 		return json;
+	}
+	
+	public ResultSet executeDataBaseQuery(String nomDeLaTable, String startTime, String endTime) throws SQLException {
+		String requeteSQL = "SELECT * FROM " + nomDeLaTable + " WHERE open_time BETWEEN ? AND ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+		preparedStatement.setLong(1, Long.valueOf(startTime));
+		preparedStatement.setLong(2, Long.valueOf(endTime));
+		return preparedStatement.executeQuery();
 	}
 
 	public Map<String, String> extractDataFromSingleLine(ResultSet resultat) throws SQLException {
@@ -57,3 +66,6 @@ public class TestParametersService {
 		return subJson;
 	}
 }
+
+
+
