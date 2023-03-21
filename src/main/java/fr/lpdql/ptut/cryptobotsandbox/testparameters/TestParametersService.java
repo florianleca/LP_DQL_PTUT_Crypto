@@ -20,21 +20,11 @@ public class TestParametersService {
 	private String url = "jdbc:mysql://54.36.120.214:9658/www";
 	private String utilisateur = "remote";
 	private String motDePasse = "I5XFH6fKPvktFGj(";
-	private Connection connection;
-
-	public TestParametersService() throws SQLException {
-		connection = DriverManager.getConnection(url, utilisateur, motDePasse);
-	}
 
 	public Map<String, Map<String, String>> getJsonFromDataBase(String crypto, String devise, String frequency,
 			String startTime, String endTime) throws SQLException {
 		String nomDeLaTable = crypto + "_" + devise + "_" + frequency;
-		SortedMap<String, Map<String, String>> json = new TreeMap<>(new Comparator<String>() {
-			@Override
-			public int compare(String s1, String s2) {
-				return -1 * s1.compareTo(s2);
-			}
-		});
+		SortedMap<String, Map<String, String>> json = new TreeMap<>();
 		ResultSet resultat = executeDataBaseQuery(nomDeLaTable, startTime, endTime);
 		while (resultat.next()) {
 			Map<String, String> subJson = extractDataFromSingleLine(resultat);
@@ -45,6 +35,7 @@ public class TestParametersService {
 	
 	public ResultSet executeDataBaseQuery(String nomDeLaTable, String startTime, String endTime) throws SQLException {
 		String requeteSQL = "SELECT * FROM " + nomDeLaTable + " WHERE open_time BETWEEN ? AND ?";
+		Connection connection = DriverManager.getConnection(url, utilisateur, motDePasse);
 		PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
 		preparedStatement.setLong(1, Long.valueOf(startTime));
 		preparedStatement.setLong(2, Long.valueOf(endTime));

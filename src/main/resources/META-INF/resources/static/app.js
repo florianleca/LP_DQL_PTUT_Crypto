@@ -4,31 +4,50 @@ $(document).ready(function () {
   });
 });
 
-function validateData() {
-  var symbole = $("#symbole").val();
-  var devise = "usdt";
-  var startTime = $("#startTime").val();
-  var endTime = $("#endTime").val();
-  var frequency = $("#frequency").val();
-
-  getExchangeData(symbole, devise, startTime, endTime, frequency);
+function afficherCrypto() {
+  var choix = document.getElementById("pair1").value;
+  document.getElementById("starting_balance_crypto_label").innerHTML = choix.toUpperCase() + " Balance";
 }
 
-function getExchangeData(symbole, devise, startTime, endTime, frequency) {
+function afficherDevise() {
+  var choix = document.getElementById("pair2").value;
+  document.getElementById("starting_balance_currency_label").innerHTML = choix.toUpperCase() + " Balance";
+}
+
+window.onload = function() {
+  afficherCrypto();
+  afficherDevise();
+}
+
+function validateData() {
+  var symbole = $("#pair1").val();
+  var devise = $("#pair2").val();
+  var start_time = $("#start_time").val();
+  var end_time = $("#end_time").val();
+  var interval = $("#interval").val();
+
+  getExchangeData(symbole, devise, start_time, end_time, interval);
+}
+
+function getExchangeData(symbole, devise, start_time, end_time, interval) {
   $.ajax({
     url: "http://127.0.0.1:8080/getdata/" + symbole + "/" + devise,
     type: "GET",
     dataType: "json",
     data: {
-      startTime: Date.parse(startTime),
-      endTime: Date.parse(endTime),
-      frequency: frequency,
+      startTime: Date.parse(start_time),
+      endTime: Date.parse(end_time),
+      frequency: interval,
     },
     success: function (obj) {
       for (var key of Object.keys(obj)) {
         var date = new Date(parseInt(key));
         var options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-        var dateformat = date.toLocaleDateString("fr-FR", options);
+        var options2 = {hour: 'numeric', minute: 'numeric'};
+        // var dateformat = date.toLocaleDateString("fr-FR", options);
+        var dateformat = date.toLocaleDateString() + " - " + date.toLocaleTimeString("fr-FR", options2);
+        
+
 
         var volume = obj[key].volume;
         var high = obj[key].high;
@@ -37,7 +56,7 @@ function getExchangeData(symbole, devise, startTime, endTime, frequency) {
         var close = obj[key].close;
         var open = obj[key].open;
 
-        $("#transactionTable").append(
+        $("#klines_table").append(
           "<tr><td>" +
             dateformat +
             "</td>" +
