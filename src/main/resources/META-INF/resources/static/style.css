@@ -272,3 +272,12 @@ th {
   border: 2px solid var(--couleur1a);
   border-radius: 10px;
 } 
+
+
+#bloc_blockly{
+  background-color: transparent;
+}
+
+#bloc_blockly_inside{
+  background-color: transparent;
+}
