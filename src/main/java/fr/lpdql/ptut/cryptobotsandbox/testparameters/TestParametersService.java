@@ -56,6 +56,8 @@ public class TestParametersService {
 		subJson.put("taker_buy_quote_asset_volume", resultat.getString("taker_buy_quote_asset_volume"));
 		return subJson;
 	}
+
+
 }
 
 
