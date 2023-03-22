@@ -86,19 +86,19 @@
 }
 
 #input_data_parameters {
+  height: 142px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 5px;
   align-items: center;
-  line-height: 31.7px;
 }
 
 #input_test_parameters {
+  height: 142px;
   display: grid;
-  grid-template-columns: 1fr 90px;
+  grid-template-columns: auto 60px;
   gap: 5px;
   align-items: center;
-  line-height: 44px;
 }
 
 #pair_label {
