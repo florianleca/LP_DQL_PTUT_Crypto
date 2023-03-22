@@ -48,7 +48,6 @@ public class DataBaseUpdater {
 
             // Insertion des nouvelles klines dans la base de données
             for (int i = 0; i < klinesArray.length(); i++) {
-            	System.out.println("requet");//TODO !debug
                 Kline kline = new Kline(klinesArray.getJSONArray(i));
                 dataBaseInterface.addKlineToDB(kline);
             }
