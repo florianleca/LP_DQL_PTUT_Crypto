@@ -1,5 +1,7 @@
 package fr.lpdql.ptut.cryptobotsandbox.databaseupdater;
 
+import java.util.Locale;
+
 import org.json.JSONArray;
 
 public class Kline {
@@ -49,12 +51,19 @@ public class Kline {
 
 
     public String getInsertSql(String tableName) {
-        return String.format("INSERT INTO %s VALUES (%d, %f, %f, %f, %f, %f, %d, %f, %d, %f, %f, %d)",
+        return String.format(new Locale("US"), "INSERT INTO %s "
+        		+ "(open_time, `open`, high, low, `close`, volume, close_time, "
+        		+ "quote_asset_volume, number_of_trades, taker_buy_base_asset_volume, "
+        		+ "taker_buy_quote_asset_volume, `ignore`) "
+        		+ "VALUES (%d, %f, %f, %f, %f, %f, %d, %f, %d, %f, %f, %d);",
                 tableName, this.openTime, this.open, this.high, this.low, this.close, this.volume,
-                this.closeTime,
-                this.quoteAssetVolume, this.numberOfTrades, this.takerBuyBaseAssetVolume, this.takerBuyQuoteAssetVolume,
-        		this.ignore);
+                this.closeTime, this.quoteAssetVolume, this.numberOfTrades,
+                this.takerBuyBaseAssetVolume, this.takerBuyQuoteAssetVolume, this.ignore);
     }
+
+	public long getTimestamp() {
+		return this.openTime;
+	}
 }
 
 
