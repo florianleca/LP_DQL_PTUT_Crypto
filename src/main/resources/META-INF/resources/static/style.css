@@ -294,6 +294,11 @@ th {
 .blocklyMainBackground {
   stroke: none;
 }
-.blocklyToolboxBackground {
-color: #1e1e1e;
+.blocklyToolboxDiv {
+  stroke: none;
+  border: 10px solid red !important;
+}
+
+.injectionDiv {
+  border-radius: 8.5px;
 }
