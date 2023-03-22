@@ -294,6 +294,7 @@ th {
 .blocklyMainBackground {
   stroke: none;
 }
+
 .blocklyToolboxDiv {
   stroke: none;
   border: 10px solid red !important;
