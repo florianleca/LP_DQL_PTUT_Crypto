@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -14,10 +13,10 @@ import com.squareup.okhttp.Response;
 public class DataBaseUpdater {
 	private final String symbol;
 	private final String interval;
-	private DataBaseInterface dataBaseInterface;
-    private OkHttpClient httpClient;
+	private final DataBaseInterface dataBaseInterface;
+    private final OkHttpClient httpClient;
 
-    public DataBaseUpdater(String symbol, String interval, DataBaseInterface dataBaseInterface) throws SQLException {
+    public DataBaseUpdater(String symbol, String interval, DataBaseInterface dataBaseInterface) {
     	this.symbol = symbol;
     	this.interval  = interval;
     	this.dataBaseInterface = dataBaseInterface;
@@ -26,13 +25,12 @@ public class DataBaseUpdater {
         httpClient = new OkHttpClient();
     }
     
-    @Scheduled(fixedRate = 6 * 60 * 60 * 1000)
     public void updateKlines() throws SQLException, JSONException, IOException {
 
-        // Boucle pour récupérer les nouvelles klines jusqu'à moins de 10 minutes avant l'heure actuelle
+        // Boucle pour récupérer les nouvelles klines jusqu'à moins de 10 heures avant l'heure actuelle
         long now = System.currentTimeMillis();
         long endTime = now - (10 * 60 * 60 * 1000); // 10 hours ago
-        long lastTimestamp = 0;
+        long lastTimestamp;
         long startTime = 0;
 
         while (startTime < endTime) {
