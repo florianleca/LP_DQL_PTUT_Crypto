@@ -1,5 +1,7 @@
 $(document).ready(function () {
   $("#btnSubmit").click(function () {
+    let tabHtml = document.getElementById("klines_body");
+    tabHtml.innerHTML = "";
     validateData();
   });
 });
@@ -17,6 +19,7 @@ function afficherDevise() {
 window.onload = function() {
   afficherCrypto();
   afficherDevise();
+  validateData();
 }
 
 function validateData() {
@@ -56,7 +59,7 @@ function getExchangeData(symbole, devise, start_time, end_time, interval) {
         var close = obj[key].close;
         var open = obj[key].open;
 
-        $("#klines_table").append(
+        $("#klines_body").append(
           "<tr><td>" +
             dateformat +
             "</td>" +
@@ -84,3 +87,6 @@ function getExchangeData(symbole, devise, start_time, end_time, interval) {
     },
   });
 }
+
+
+

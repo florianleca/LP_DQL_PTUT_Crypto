@@ -5,21 +5,25 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TestParametersService {
-
-	private String url = "jdbc:mysql://54.36.120.214:9658/www";
-	private String utilisateur = "remote";
-	private String motDePasse = "I5XFH6fKPvktFGj(";
+	
+	@Value("${DB_url}")
+	private String url;
+	
+	@Value("${DB_user}")
+	private String utilisateur;
+	
+	@Value("${DB_password}")
+	private String motDePasse;
 
 	public Map<String, Map<String, String>> getJsonFromDataBase(String crypto, String devise, String frequency,
 			String startTime, String endTime) throws SQLException {
@@ -56,6 +60,8 @@ public class TestParametersService {
 		subJson.put("taker_buy_quote_asset_volume", resultat.getString("taker_buy_quote_asset_volume"));
 		return subJson;
 	}
+
+
 }
 
 
