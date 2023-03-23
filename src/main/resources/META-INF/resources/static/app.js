@@ -28,10 +28,10 @@ window.onload = function() {
   validateData();
   let startValue = document.getElementById("start_time");
   let endValue = document.getElementById("end_time")
-  endValue.value = maDateMoins(1);
+  endValue.value = maDateMoins(0);
   startValue.value = maDateMoins(10)
-
-  console.log(startValue.value+endValue.value+"---------"+Date.setDate(temp_day-24));
+  startValue.max = maDateMoins(0);
+  endValue.max = maDateMoins(0);
 }
 
 //permet d'obtenir le jour actuel moins 
@@ -75,9 +75,8 @@ function getExchangeData(symbole, devise, start_time, end_time, interval) {
     success: function (obj) {
       for (var key of Object.keys(obj)) {
         var date = new Date(parseInt(key));
-        var options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-        var options2 = {hour: 'numeric', minute: 'numeric'};
-        var dateformat = date.toLocaleDateString() + " - " + date.toLocaleTimeString("fr-FR", options2);
+        var options = {hour: 'numeric', minute: 'numeric'};
+        var dateformat = date.toLocaleDateString() + " - " + date.toLocaleTimeString("fr-FR", options);
         
 
 
