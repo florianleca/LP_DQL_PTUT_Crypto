@@ -45,4 +45,4 @@ var workspace = Blockly.inject('blocklyDiv', {toolbox: toolbox});
 //     }
 //  });
 
-  workspace.setTheme("monTheme");
+//  workspace.setTheme("monTheme");
