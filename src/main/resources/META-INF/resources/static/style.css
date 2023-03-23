@@ -14,7 +14,7 @@
 * {
   margin: 0px;
   padding: 0px;
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
   font-family: Helvetica, sans-serif;
   scroll-behavior: smooth;
   color: whitesmoke;
@@ -45,10 +45,19 @@
   grid-column: 3 / 4;
   grid-row: 1 / 2;
 }
+
 #bloc_blockly {
   grid-column: 1 / 2;
   grid-row: 1 / 3;
+  background-color: whitesmoke;
 }
+
+#bloc_blockly * {
+  background: transparent;
+  /* border-radius: 10px solid red;
+  overflow: hidden;  */
+}
+
 #bloc_tradingview {
   grid-column: 2 / 4;
   grid-row: 2 / 3;
@@ -273,29 +282,24 @@ th {
   border-radius: 10px;
 } 
 
+
 #blocklyDiv {
   height: 100%;
   width: 100%;
-  outline: red;
+  border-radius: 10px solid red;
+  /* overflow: hidden; 
+  box-sizing: border-box; 
+  border: 1px solid transparent; */
+}
+.blocklyMainBackground {
+  stroke: none;
 }
 
-/* .blocklySelected>.blocklyPath {
-  background-color: red;
+.blocklyToolboxDiv {
+  stroke: none;
+  border: 10px solid red !important;
 }
 
-.blocklyPath {
-  background-color: red;
-} */
-
-/* .blocklyDraggable,
-.blocklyDragging,
-.blocklySvg,
-.blocklyPath,
-.blocklyPathDark,
-.blocklyDragSurface,
-.blocklySelected {
-  stroke-opacity: 1 !important;
-  background-color: #56a83d !important;
-  box-shadow: none !important;
-  outline: none !important;
-} */
+.injectionDiv {
+  border-radius: 8.5px;
+}
