@@ -32,14 +32,14 @@ public class UpdaterMaster {
 
     public void initializeUpdaters() throws SQLException {
         List<DataBaseUpdater> localUpdaters = new ArrayList<>();
-        for(String tableName : tablesNames) {
+        for (String tableName : tablesNames) {
             Pattern pattern = Pattern.compile("([^_]+)_([^_]+)_(.+)");
             Matcher matcher = pattern.matcher(tableName);
             matcher.matches();
             String crypto = matcher.group(1);
             String currency = matcher.group(2);
             String interval = matcher.group(3);
-            String symbol = crypto.toUpperCase()+currency.toUpperCase();
+            String symbol = crypto.toUpperCase() + currency.toUpperCase();
 
             DataBaseUpdater updater = new DataBaseUpdater(symbol, interval,
                     new DataBaseMySQL(url, tableName, utilisateur, motDePasse));
@@ -48,13 +48,14 @@ public class UpdaterMaster {
         this.updaters = localUpdaters;
     }
 
-    @Scheduled(fixedRate = 7 * 1000)
+    // Toutes les tables sont mises à jour toutes les heures
+    @Scheduled(fixedRate = 3600 * 1000)
     public void updateAll() throws SQLException {
         System.out.println("Database update en cours");
-        if (updaters==null) {
+        if (updaters == null) {
             initializeUpdaters();
         }
-        for(DataBaseUpdater updater : updaters) {
+        for (DataBaseUpdater updater : updaters) {
             try {
                 updater.updateKlines();
             } catch (SQLException | IOException e) {

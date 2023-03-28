@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="grids.css" />
     <link rel="stylesheet" href="style.css" />
     <title>Blockly Trader</title>
 
@@ -12,8 +13,9 @@
       integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
       crossorigin="anonymous"
     ></script>
-    
+
     <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
     <script type="application/javascript" src="app.js"></script>
   </head>
 
@@ -23,61 +25,46 @@
     </header>
 
     <div id="main_container">
-      
       <div id="bloc_data_settings" class="settings_bloc">
         <span>DATA SETTINGS</span>
         <div id="input_data_parameters">
-          <p id="pair_label">Pair</p>
-          <select id="pair1" onchange="afficherCrypto()" onload="afficherCrypto()">
+          <label for="pair1" id="pair_label">Pair</label>
+          <select id="pair1" onchange="afficherCrypto()">
             <option value="btc">BTC</option>
             <option value="eth">ETH</option>
           </select>
-          <select id="pair2" onchange="afficherDevise()" onload="afficherDevise()">
+          <select id="pair2" onchange="afficherDevise()">
             <option value="usdt">USDT</option>
           </select>
-          <p id="interval_label">Interval</p>
+          <label for="interval" id="interval_label">Interval</label>
           <select id="interval">
             <option value="1h">1 hour</option>
             <option value="1m">1 minute</option>
           </select>
-          <p id="from_label">From</p>
-          <input
-            id="start_time"
-            type="date"
-            value="2023-01-01"
-            min="2018-01-01"
-            max="2023-02-28"
-          />
-          <p id="to_label">To</p>
-          <input
-            id="end_time"
-            type="date"
-            value="2023-02-28"
-            min="2018-01-01"
-            max="2023-02-28"
-          />
+          <label for="start_time" id="from_label">From</label>
+          <input id="start_time" type="date" min="2018-01-01" />
+          <label for="end_time" id="to_label">To</label>
+          <input id="end_time" type="date" min="2018-01-01" />
         </div>
 
-        <button type="button" id="btnSubmit">Submit</button>
+        <button type="button" id="submit_button">Submit</button>
       </div>
 
       <div id="bloc_test_settings" class="settings_bloc">
         <span>TEST SETTINGS</span>
         <div id="input_test_parameters">
-          <p id="starting_balance_crypto_label"></p>
-          <input type="text" value= "0" id="starting_balance_crypto">
-          <p id="starting_balance_currency_label">USDT Balance</p>
-          <input type="text" value= "1000" id="starting_balance_currency">
-          <p id="exchange_fees_label">Exchange Fees</p>
-          <input type="text" value= "0.075" id="exchange_fees">
+          <label for="starting_balance_crypto" id="starting_balance_crypto_label"></label>
+          <input type="text" value="0" id="starting_balance_crypto" />
+          <label for="starting_balance_currency" id="starting_balance_currency_label">USDT Balance</label>
+          <input type="text" value="1000" id="starting_balance_currency" />
+          <label for="exchange_fees" id="exchange_fees_label">Exchange Fees</label>
+          <input type="text" value="0.075" id="exchange_fees" />
         </div>
-        <button type="button">Submit</button>
+        <button type="button" id="run_test_button">Run Test</button>
       </div>
 
-      <div id="bloc_blockly" class="to_do_bloc">
-        <div id="blocklyDiv">
-          
-        </div>
+      <div id="bloc_blockly">
+        <div id="blocklyDiv"></div>
       </div>
 
       <div id="bloc_tradingview" class="to_do_bloc">
@@ -92,7 +79,7 @@
         <table id="klines_table">
           <thead>
             <tr>
-              <th>Time</th>
+              <th>Open Time</th>
               <th>Open</th>
               <th>Close</th>
               <th>Low</th>
@@ -101,14 +88,10 @@
               <th>Trades</th>
             </tr>
           </thead>
-          <tbody id="klines_body">
-          </tbody>
+          <tbody id="klines_body"></tbody>
         </table>
       </div>
-
     </div>
-
-    
   </body>
   <script type="application/javascript" src="blockly.js"></script>
 </html>
