@@ -1,4 +1,4 @@
-package fr.lpdql.ptut.cryptobotsandbox.testparameters;
+package fr.lpdql.ptut.blocklytrader.datasettings;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TestParametersService {
+public class DataSettingsService {
 	
 	@Value("${DB_url}")
 	private String url;
@@ -41,8 +41,8 @@ public class TestParametersService {
 		String requeteSQL = "SELECT * FROM " + nomDeLaTable + " WHERE open_time BETWEEN ? AND ?";
 		Connection connection = DriverManager.getConnection(url, utilisateur, motDePasse);
 		PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-		preparedStatement.setLong(1, Long.valueOf(startTime));
-		preparedStatement.setLong(2, Long.valueOf(endTime));
+		preparedStatement.setLong(1, Long.parseLong(startTime));
+		preparedStatement.setLong(2, Long.parseLong(endTime));
 		return preparedStatement.executeQuery();
 	}
 

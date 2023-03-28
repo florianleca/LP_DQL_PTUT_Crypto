@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr.lpdql.ptut</groupId>
-	<artifactId>cryptobotsandbox</artifactId>
+	<artifactId>blockly-trader</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cryptobotsandbox</name>
-	<description>Projet tutoré de bac à sable pour crypto-bots</description>
+	<name>Blockly Trader</name>
+	<description>Projet tutoré - LP DQL</description>
 	<properties>
 		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

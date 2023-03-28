@@ -1,5 +1,7 @@
-package fr.lpdql.ptut.cryptobotsandbox.databaseupdater;
+package fr.lpdql.ptut.blocklytrader.databaseupdater;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,6 +18,7 @@ import java.util.regex.Pattern;
 @EnableScheduling
 public class UpdaterMaster {
 
+    private final Logger logger = LoggerFactory.getLogger(UpdaterMaster.class);
     @Value("${DB_url}")
     private String url;
 
@@ -41,8 +44,7 @@ public class UpdaterMaster {
             String interval = matcher.group(3);
             String symbol = crypto.toUpperCase() + currency.toUpperCase();
 
-            DataBaseUpdater updater = new DataBaseUpdater(symbol, interval,
-                    new DataBaseMySQL(url, tableName, utilisateur, motDePasse));
+            DataBaseUpdater updater = new DataBaseUpdater(symbol, interval, new MySQLConnector(url, tableName, utilisateur, motDePasse));
             localUpdaters.add(updater);
         }
         this.updaters = localUpdaters;
@@ -51,7 +53,7 @@ public class UpdaterMaster {
     // Toutes les tables sont mises à jour toutes les heures
     @Scheduled(fixedRate = 3600 * 1000)
     public void updateAll() throws SQLException {
-        System.out.println("Database update en cours");
+        logger.info("Database update en cours");
         if (updaters == null) {
             initializeUpdaters();
         }
@@ -60,9 +62,9 @@ public class UpdaterMaster {
                 updater.updateKlines();
             } catch (SQLException | IOException e) {
                 //TODO
-                System.out.println("Exception à traiter : " + e);
+                logger.warn("Exception à traiter : " + e);
             }
         }
-        System.out.println("Update terminé");
+        logger.info("Update terminé");
     }
 }
