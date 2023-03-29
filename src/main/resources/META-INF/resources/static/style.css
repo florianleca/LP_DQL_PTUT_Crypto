@@ -204,3 +204,12 @@ th {
 .blocklyMenuItem * {
   background-color: transparent;
 }
+#test_klines_table{
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+}
+thead{
+  text-align: center;
+}

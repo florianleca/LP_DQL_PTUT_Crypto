@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ public class DataSettingsService {
 	@Value("${DB_password}")
 	private String motDePasse;
 
+	private Map<String, Map<String, String>> currentUserDataSet;
+
 	public Map<String, Map<String, String>> getJsonFromDataBase(String crypto, String devise, String frequency,
 			String startTime, String endTime) throws SQLException {
 		String nomDeLaTable = crypto + "_" + devise + "_" + frequency;
@@ -34,6 +37,7 @@ public class DataSettingsService {
 			Map<String, String> subJson = extractDataFromSingleLine(resultat);
 			json.put(resultat.getString("open_time"), subJson);
 		}
+		currentUserDataSet = json;
 		return json;
 	}
 	
@@ -61,7 +65,9 @@ public class DataSettingsService {
 		return subJson;
 	}
 
-
+	public Map<String, Map<String, String>> getCurrentUserDataSet(){
+		return currentUserDataSet;
+	}
 }
 
 

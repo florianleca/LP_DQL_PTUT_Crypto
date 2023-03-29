@@ -110,5 +110,86 @@ $(document).ready(function () {
     const test = Blockly.serialization.workspaces.save(workspace);
     console.log(JSON.stringify(test)); // Garder cette ligne qui peut être pratique pour debug
     // Envoyer le json au back via Ajax (cf précédent bouton)
+    clearElements("test_klines_body")
+    valideTest();
   });
 });
+// Vider le tableau et le graphe afin d'éviter des duplications d'affichage
+function clearElements(element) {
+  document.getElementById(element).innerHTML = null;
+}
+
+function valideTest() {
+  var cryptoBalance = $("#starting_balance_crypto").val();
+  var deviseBalance = $("#starting_balance_currency").val();
+  var exchangeFees = $("#exchange_fees").val();
+  var captureJson = JSON.stringify(Blockly.serialization.workspaces.save(workspace));
+  getTestData(cryptoBalance,deviseBalance,exchangeFees,captureJson,);
+}
+
+
+function getTestData(cryptoBalance,deviseBalance,exchangeFees,blocklyJson) {
+  $.ajax({
+    url: "http://127.0.0.1:8080/runtest/",
+    type: "GET",
+    dataType: "json",
+    data: {
+      blocklyJson : blocklyJson,
+      cryptoBalance: cryptoBalance,
+      deviseBalance: deviseBalance,
+      exchangeFees: exchangeFees,
+      
+    },
+    success:remplirTestResult,
+  });
+}
+
+function remplirTestResult(json){
+  //   var json= `{"1679443200000":{
+  //   "type":"buy",
+  //   "crypto_amount":"0.155",
+  //   "currency_amount":"1501",
+  //   "rates":"15675"},
+  // "1679475600000":{
+  //   "type":"sell",
+  //   "crypto_amount":"0.156",
+  //   "currency_amount":"1502",
+  //   "rate":"15676"},
+  // "1679464800000":{
+  //   "type":"buy",
+  //   "crypto_amount":"0.157",
+  //   "currency_amount":"1503",
+  //   "rate":"15677"},
+  // "1679461200000":{
+  //   "type":"sell",
+  //   "crypto_amount":"0.158",
+  //   "currency_amount":"1504",
+  //   "rate":"15678"}
+    
+  // }`
+  // json=JSON.parse(json);
+  // console.log(json);
+  let pair = true;
+  
+  for(let key of Object.keys(json)){
+    var bos="Vente de ";
+    if(json[key].type == 'buy'){
+      bos="Achat de ";
+    }
+
+    $('#test_klines_body').append(
+      '<tr class="' +
+      pariteLigne(pair) +
+      '"><td>' + bos +json[key].crypto_amount +" "+ document.getElementById("pair1").value +" pour la modique somme de "+ json[key].currency_amount + " "+document.getElementById("pair2").value +"</td>"
+    )
+      pair=!pair
+  }
+}
+// Sert à remplir les lignes avec 2 couleurs en alternance
+function pariteLigne(bool) {
+  let classe = "lignePaire";
+  if (!bool) {
+    classe = "ligneImpaire";
+  }
+  return classe;
+}

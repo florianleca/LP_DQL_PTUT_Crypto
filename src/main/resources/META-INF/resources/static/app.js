@@ -49,11 +49,14 @@ function formatageDateCalendriers(date) {
 // Lance l'action lorsqu'on clique sur "Submit"
 $(document).ready(function () {
   $("#submit_button").click(function () {
-    let tabHtml = document.getElementById("klines_body");
-    tabHtml.innerHTML = "";
+    clearElements("klines_body")
     validateData();
   });
 });
+// Vider le tableau et le graphe afin d'éviter des duplications d'affichage
+function clearElements(element) {
+  document.getElementById(element).innerHTML = null;
+}
 
 // Récupère les paramètres rentrés par l'utilisateur et les envoie
 function validateData() {
@@ -82,6 +85,7 @@ function getExchangeData(symbole, devise, start_time, end_time, interval) {
 
 // Remplit le tableau des klines à partir du json renvoyé par le back
 function remplirTableauKlines(json) {
+    
   let pair = true;
   for (let key of Object.keys(json)) {
     let date = new Date(parseInt(key));
@@ -127,3 +131,6 @@ function formatageDateTableauKlines(date) {
   let minutes = date.getMinutes().toString().padStart(2, "0");
   return day + "/" + month + "/" + year + " - " + hour + ":" + minutes;
 }
+
+
+
