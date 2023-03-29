@@ -37,6 +37,7 @@ public class DataSettingsService {
 			Map<String, String> subJson = extractDataFromSingleLine(resultat);
 			json.put(resultat.getString("open_time"), subJson);
 		}
+		currentUserDataSet = json;
 		return json;
 	}
 	
@@ -64,7 +65,9 @@ public class DataSettingsService {
 		return subJson;
 	}
 
-
+	public Map<String, Map<String, String>> getCurrentUserDataSet(){
+		return currentUserDataSet;
+	}
 }
 
 
