@@ -112,3 +112,62 @@ $(document).ready(function () {
     // Envoyer le json au back via Ajax (cf précédent bouton)
   });
 });
+
+function valideTest() {
+  var cryptoBalance = $("#starting_balance_crypto").val();
+  var deviseBalance = $("#starting_balance_currency").val();
+  var exchangeFees = $("#exchange_fees").val();
+  var captureJson = Blockly.serialization.workspaces.save(workspace);
+  getTestData(cryptoBalance,deviseBalance,exchangeFeescaptureJson,);
+}
+
+
+function getTestData(cryptoBalance,deviseBalance,exchangeFees,captureJson) {
+  $.ajax({
+    url: "http://127.0.0.1:8080/runtest/",
+    type: "GET",
+    dataType: "json",
+    data: {
+      cryptoBalance: cryptoBalance,
+      deviseBalance: deviseBalance,
+      exchangeFees: exchangeFees,
+      capturejson: captureJson,
+    },
+    success:remplirTestResult,
+  });
+}
+
+function remplirTestResult(json){
+  alert("bien ouej")
+    // var json= `{"1679443200000":{
+  //   "type":"buy",
+  //   "crypto_amount":"0.155",
+  //   "currency_amount":"1501",
+  //   "rates":"15675"},
+  // "1679475600000":{
+  //   "type":"sell",
+  //   "crypto_amount":"0.156",
+  //   "currency_amount":"1502",
+  //   "rate":"15676"},
+  // "1679464800000":{
+  //   "type":"buy",
+  //   "crypto_amount":"0.157",
+  //   "currency_amount":"1503",
+  //   "rate":"15677"},
+  // "1679461200000":{
+  //   "type":"sell",
+  //   "crypto_amount":"0.158",
+  //   "currency_amount":"1504",
+  //   "rate":"15678"}
+    
+  // }`
+
+  // for(let key of Object.keys(json)){
+  //   $('#test_klines_body').append(
+  //     '<tr class="' +
+  //     pariteLigne(pair) +
+  //     '"><td>' +json[key].type+"de"+json[key].crypto_amount+"pour"+json[key].currency_amount+"</td>"
+  //   )
+  //     pair=!pair
+  // }
+}
