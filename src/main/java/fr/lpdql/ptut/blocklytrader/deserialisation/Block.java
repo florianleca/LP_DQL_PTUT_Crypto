@@ -1,6 +1,7 @@
 package fr.lpdql.ptut.blocklytrader.deserialisation;
 
 import com.jayway.jsonpath.JsonPath;
+import fr.lpdql.ptut.blocklytrader.RunTest.RunTestService;
 import net.minidev.json.JSONObject;
 
 import java.util.Map;
@@ -26,7 +27,8 @@ public abstract class Block {
     private double valueFromKlinesVariable(Map<String, String> block) {
         JSONObject blockBis = new JSONObject(block);
         String variable = JsonPath.read(blockBis, "$.fields.DATA_TYPE");
-        double value = testRunner.oneLineKlinesVariable.get(variable);
+        Map<String, String> map = (Map<String, String>) RunTestService.currentEntry.getValue();
+        double value = Double.parseDouble(map.get(variable));
         System.out.println("Variable : " + variable + " ; sa valeur est " + value);
         return value;
     }
@@ -66,7 +68,4 @@ public abstract class Block {
         }
         return value;
     }
-
-
-
 }

@@ -3,13 +3,13 @@ package fr.lpdql.ptut.blocklytrader.deserialisation;
 import com.jayway.jsonpath.JsonPath;
 import fr.lpdql.ptut.blocklytrader.datasettings.DataSettingsController;
 import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,23 +25,22 @@ import java.util.Map;
 public class BlocklyJsonParser {
 
     private final Logger logger = LoggerFactory.getLogger(DataSettingsController.class);
-    private final File jsonFile;
     private final List<Map<String, String>> blocks;
 
 
     // Constructeur prenant le json (String) en entrée
-    public BlocklyJsonParser(String jsonFilePath) throws IOException {
-        jsonFile = new File(jsonFilePath);
-        blocks = parseBlocks();
+    public BlocklyJsonParser(String stringJson) throws ParseException {
+        blocks = parseBlocks(stringJson);
     }
 
-
     // une methode en extrait les blocks
-    public List<Map<String, String>> parseBlocks() throws IOException {
+    public List<Map<String, String>> parseBlocks(String stringJson) throws ParseException {
         List<Map<String, String>> blocksList = new ArrayList<>();
-        JSONArray blocksJsonArray = JsonPath.read(jsonFile, "$.blocks.blocks");
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(stringJson);
+        JSONArray blocksJsonArray = JsonPath.read(json, "$.blocks.blocks");
         for (Object obj : blocksJsonArray) {
-            Map<String, String> map = (LinkedHashMap<String, String>) obj;
+            Map<String, String> map = (Map<String, String>) obj;
             blocksList.add(map);
         }
         return blocksList;

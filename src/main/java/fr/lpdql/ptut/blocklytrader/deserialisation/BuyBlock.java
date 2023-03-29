@@ -1,6 +1,7 @@
 package fr.lpdql.ptut.blocklytrader.deserialisation;
 
 import com.jayway.jsonpath.JsonPath;
+import fr.lpdql.ptut.blocklytrader.RunTest.RunTestService;
 
 import java.util.Map;
 
@@ -19,23 +20,22 @@ public class BuyBlock extends Block {
     }
 
     private void makeTransaction() {
-        if (testRunner.currencyBalance !=0) {
+        if (RunTestService.currentDeviseBalance != 0) {
             double montantDepense = 0.;
             if (unit.equals("%")) {
-                montantDepense = (amount/100.)*testRunner.currencyBalance;
+                montantDepense = (amount / 100.) * RunTestService.currentDeviseBalance;
             } else if (unit.equals("$")) {
-                montantDepense = Math.min(amount, testRunner.currencyBalance);
+                montantDepense = Math.min(amount, RunTestService.currentDeviseBalance);
             } else {
                 System.out.println("Houston we've got a problem");
             }
-            System.out.println("On dépense " + montantDepense);
-            double ancienSoldeDevise = testRunner.currencyBalance;
-            testRunner.currencyBalance -= montantDepense;
-            System.out.println("Le solde ($) passe de " + ancienSoldeDevise + " à " + testRunner.currencyBalance);
-            double ancienSoldeCoin = testRunner.cryptoBalance;
-            double cryptoRate = testRunner.oneLineKlinesVariable.get("close");
-            testRunner.cryptoBalance += montantDepense/cryptoRate;
-            System.out.println("Le solde (BTC) passe de " + ancienSoldeCoin + " à " + testRunner.cryptoBalance);
+            double ancienSoldeDevise = RunTestService.currentDeviseBalance;
+            RunTestService.currentDeviseBalance -= montantDepense;
+            double ancienSoldeCoin = RunTestService.currentCryptoBalance;
+            Map<String, String> map = (Map<String, String>) RunTestService.currentEntry.getValue();
+            double cryptoRate = Double.parseDouble(map.get("close"));
+            RunTestService.currentCryptoBalance += montantDepense / cryptoRate;
+            RunTestService.addTransaction("buy", montantDepense / cryptoRate, montantDepense, cryptoRate);
         }
     }
 }
