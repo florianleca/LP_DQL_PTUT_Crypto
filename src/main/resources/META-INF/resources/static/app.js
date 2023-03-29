@@ -1,5 +1,6 @@
 // Définit les fonctions à exécuter au chargement de la page
 window.onload = function () {
+  //var chart = new ApexCharts(document.querySelector("#bloc_tradingview"), {});
   afficherCrypto();
   afficherDevise();
   manageCalendars();
@@ -49,11 +50,16 @@ function formatageDateCalendriers(date) {
 // Lance l'action lorsqu'on clique sur "Submit"
 $(document).ready(function () {
   $("#submit_button").click(function () {
-    let tabHtml = document.getElementById("klines_body");
-    tabHtml.innerHTML = "";
+    clearElements("klines_body");
+    clearElements("bloc_tradingview");
     validateData();
   });
 });
+
+// Vider le tableau et le graphe afin d'éviter des duplications d'affichage
+function clearElements(element) {
+  document.getElementById(element).innerHTML = null;
+}
 
 // Récupère les paramètres rentrés par l'utilisateur et les envoie
 function validateData() {
@@ -76,7 +82,10 @@ function getExchangeData(symbole, devise, start_time, end_time, interval) {
       endTime: Date.parse(end_time),
       frequency: interval,
     },
-    success: remplirTableauKlines,
+    success: function(json) {
+      remplirTableauKlines(json);
+      genererBougies(json, symbole, devise);
+    }
   });
 }
 
@@ -126,4 +135,69 @@ function formatageDateTableauKlines(date) {
   let hour = date.getHours().toString().padStart(2, "0");
   let minutes = date.getMinutes().toString().padStart(2, "0");
   return day + "/" + month + "/" + year + " - " + hour + ":" + minutes;
+}
+
+// Traite les données récupérées du Json pour générer les "bougies" et les confier à la fonction "displayGraphique"
+function genererBougies(json, symbole, devise) {
+  let index = 0;
+  let datesGraphe = [];
+  let donneesBougiesGeneral = [];
+  let donneesOpen = [];
+  let donneesHigh = [];
+  let donneesLow = [];
+  let donneesClose = [];
+  for (let key of Object.keys(json)) {
+    let donneesBougies = [];
+    let date = new Date(parseInt(key));
+    let high = json[key].high;
+    let low = json[key].low;
+    let close = json[key].close;
+    let open = json[key].open;
+    datesGraphe.push(date);
+    donneesOpen.push(open);
+    donneesHigh.push(high);
+    donneesLow.push(low);
+    donneesClose.push(close);
+    donneesBougies.push(open, high, low, close);
+    donneesBougiesGeneral.push(donneesBougies);
+    index++;
+  }
+  displayGraphique(datesGraphe, donneesOpen, donneesHigh, donneesLow, donneesClose, symbole, devise);
+}
+
+// Permet d'afficher un graphe de trading de type "candlestick"
+function displayGraphique(datesGraphe, donneesOpen, donneesHigh, donneesLow, donneesClose, symbole, devise) {
+  let index = 0;
+  let donneesGraph = [];
+  for(let date in datesGraphe){
+    let itemToPush = {
+      x: new Date(datesGraphe[date]),
+      y: [donneesOpen[index], donneesHigh[index], donneesLow[index], donneesClose[index]]
+    }
+    donneesGraph.push(itemToPush);
+    index++; 
+  }
+  let options = {
+    series: [{
+    data: donneesGraph
+  }],
+    chart: {
+    type: 'candlestick',
+    height: 350
+  },
+  title: {
+    text: symbole.toUpperCase() + ' en ' + devise.toUpperCase(),
+    align: 'left'
+  },
+  xaxis: {
+    type: 'datetime'
+  },
+  yaxis: {
+    tooltip: {
+      enabled: true
+    }
+  }
+  };
+  var chart = new ApexCharts(document.querySelector("#bloc_tradingview"), options);
+  chart.render();
 }
