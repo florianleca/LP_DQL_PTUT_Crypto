@@ -110,36 +110,42 @@ $(document).ready(function () {
     const test = Blockly.serialization.workspaces.save(workspace);
     console.log(JSON.stringify(test)); // Garder cette ligne qui peut être pratique pour debug
     // Envoyer le json au back via Ajax (cf précédent bouton)
+    clearElements("test_klines_body")
+    valideTest();
   });
 });
+// Vider le tableau et le graphe afin d'éviter des duplications d'affichage
+function clearElements(element) {
+  document.getElementById(element).innerHTML = null;
+}
 
 function valideTest() {
   var cryptoBalance = $("#starting_balance_crypto").val();
   var deviseBalance = $("#starting_balance_currency").val();
   var exchangeFees = $("#exchange_fees").val();
-  var captureJson = Blockly.serialization.workspaces.save(workspace);
-  getTestData(cryptoBalance,deviseBalance,exchangeFeescaptureJson,);
+  var captureJson = JSON.stringify(Blockly.serialization.workspaces.save(workspace));
+  getTestData(cryptoBalance,deviseBalance,exchangeFees,captureJson,);
 }
 
 
-function getTestData(cryptoBalance,deviseBalance,exchangeFees,captureJson) {
+function getTestData(cryptoBalance,deviseBalance,exchangeFees,blocklyJson) {
   $.ajax({
     url: "http://127.0.0.1:8080/runtest/",
     type: "GET",
     dataType: "json",
     data: {
+      blocklyJson : blocklyJson,
       cryptoBalance: cryptoBalance,
       deviseBalance: deviseBalance,
       exchangeFees: exchangeFees,
-      capturejson: captureJson,
+      
     },
     success:remplirTestResult,
   });
 }
 
 function remplirTestResult(json){
-  alert("bien ouej")
-    // var json= `{"1679443200000":{
+  //   var json= `{"1679443200000":{
   //   "type":"buy",
   //   "crypto_amount":"0.155",
   //   "currency_amount":"1501",
@@ -161,13 +167,29 @@ function remplirTestResult(json){
   //   "rate":"15678"}
     
   // }`
+  // json=JSON.parse(json);
+  // console.log(json);
+  let pair = true;
+  
+  for(let key of Object.keys(json)){
+    var bos="Vente de ";
+    if(json[key].type == 'buy'){
+      bos="Achat de ";
+    }
 
-  // for(let key of Object.keys(json)){
-  //   $('#test_klines_body').append(
-  //     '<tr class="' +
-  //     pariteLigne(pair) +
-  //     '"><td>' +json[key].type+"de"+json[key].crypto_amount+"pour"+json[key].currency_amount+"</td>"
-  //   )
-  //     pair=!pair
-  // }
+    $('#test_klines_body').append(
+      '<tr class="' +
+      pariteLigne(pair) +
+      '"><td>' + bos +json[key].crypto_amount +" "+ document.getElementById("pair1").value +" pour la modique somme de "+ json[key].currency_amount + " "+document.getElementById("pair2").value +"</td>"
+    )
+      pair=!pair
+  }
+}
+// Sert à remplir les lignes avec 2 couleurs en alternance
+function pariteLigne(bool) {
+  let classe = "lignePaire";
+  if (!bool) {
+    classe = "ligneImpaire";
+  }
+  return classe;
 }
