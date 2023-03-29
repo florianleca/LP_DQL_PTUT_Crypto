@@ -1,13 +1,13 @@
-package fr.lpdql.ptut.cryptobotsandbox;
+package fr.lpdql.ptut.blocklytrader;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CryptobotsandboxApplication {
+public class BlocklyTraderApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CryptobotsandboxApplication.class, args);
+		SpringApplication.run(BlocklyTraderApplication.class, args);
 	}
 
 }

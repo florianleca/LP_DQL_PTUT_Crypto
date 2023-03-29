@@ -1,10 +1,10 @@
-package fr.lpdql.ptut.cryptobotsandbox;
+package fr.lpdql.ptut.blocklytrader;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CryptobotsandboxApplicationTests {
+class BlocklyTraderApplicationTests {
 
 	@Test
 	void contextLoads() {
