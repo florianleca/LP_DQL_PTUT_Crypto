@@ -47,6 +47,8 @@ public class RunTestController {
         } catch (SQLException e) {
             logger.warn("Exception à traiter : " + e);
         }*/
+        System.out.println("runTest dans rutestcontroller");
+        //----------------------
         return testResult;
     }
 }
