@@ -18,8 +18,8 @@ public abstract class Block {
 
     protected double valueFromMathNumber(Map<String, String> block) {
         JSONObject blockBis = new JSONObject(block);
-        String stringValue = Integer.toString(JsonPath.read(blockBis, "$.fields.NUM"));
-        double value = Double.parseDouble(stringValue);
+        String valueString = (JsonPath.read(blockBis, "$.fields.NUM")).toString();
+        double value = Double.parseDouble(valueString);
         System.out.println("Ce membre est un nombre, sa valeur est " + value);
         return value;
     }
@@ -61,7 +61,7 @@ public abstract class Block {
         String type = block.get("type");
         switch (type) {
             case "math_number" -> value = valueFromMathNumber(block);
-            case "math_arithmetic"-> value = new MathArithmeticBlock(block).getResult();
+            case "math_arithmetic" -> value = new MathArithmeticBlock(block).getResult();
             case "klines_variables" -> value = valueFromKlinesVariable(block);
             default -> System.out.println("Bloc valeur non reconnu");
         }
