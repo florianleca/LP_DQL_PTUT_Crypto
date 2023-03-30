@@ -43,10 +43,8 @@ public abstract class Block {
         boolean result = false;
         String type = block.get("type");
         switch (type) {
-            case "logic_compare" -> {
-                System.out.println("\nTraitement d'un block logic_compare");
-                result = new LogicCompareBlock(block).getResult();
-            }
+            case "logic_compare" -> result = new LogicCompareBlock(block).getResult();
+            case "logic_operation" -> result = new LogicOperationBlock(block).getResult();
             default -> System.out.println("Block de type 'booléen' inconnu");
         }
         System.out.println("Le résultat est : " + result);
@@ -63,6 +61,7 @@ public abstract class Block {
         String type = block.get("type");
         switch (type) {
             case "math_number" -> value = valueFromMathNumber(block);
+            case "math_arithmetic"-> value = new MathArithmeticBlock(block).getResult();
             case "klines_variables" -> value = valueFromKlinesVariable(block);
             default -> System.out.println("Bloc valeur non reconnu");
         }

@@ -15,9 +15,11 @@ import java.util.Map;
 
 /**
  * logic_compare (EQ, NEQ, LT, LTE, GT, GTE)
+ * logic_operation (AND, OR)
  * math_number (juste un nombre, ex : 123)
- * controls_if
+ * math_arithmetic (ADD, MINUS, MULTIPLY, DIVIDE, POWER)
  * klines_variables (open, close, low, high, volume)
+ * controls_if
  * buy (%, $)
  * sell (%, coin)
  */
@@ -36,7 +38,7 @@ public class BlocklyJsonParser {
     // une methode en extrait les blocks
     public List<Map<String, String>> parseBlocks(String stringJson) throws ParseException {
         List<Map<String, String>> blocksList = new ArrayList<>();
-        JSONParser parser = new JSONParser();
+        JSONParser parser = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
         JSONObject json = (JSONObject) parser.parse(stringJson);
         JSONArray blocksJsonArray = JsonPath.read(json, "$.blocks.blocks");
         for (Object obj : blocksJsonArray) {

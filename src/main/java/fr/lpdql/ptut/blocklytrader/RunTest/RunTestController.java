@@ -20,7 +20,7 @@ public class RunTestController {
     private RunTestService runTestService;
 
     @GetMapping("/runtest/")
-    public Map<String, Map<String, String>> runTest(
+    public Map<Object, Object> runTest(
             @RequestParam String blocklyJson,
             @RequestParam String cryptoBalance,
             @RequestParam String deviseBalance,

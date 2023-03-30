@@ -18,6 +18,11 @@ public class RunTestService {
     public static Map.Entry currentEntry;
     public static double currentCryptoBalance;
     public static double currentDeviseBalance;
+
+    public static String firstOpen;
+
+    public static String lastClose;
+
     @Autowired
     private DataSettingsService dataSettingsService;
 
@@ -32,7 +37,7 @@ public class RunTestService {
         transactions.put(timestamp, map);
     }
 
-    public Map<String, Map<String, String>> getTestResult(String blocklyJson,
+    public Map<Object, Object> getTestResult(String blocklyJson,
                                                           String cryptoBalance,
                                                           String deviseBalance,
                                                           String exchangeFees) throws ParseException {
@@ -41,13 +46,41 @@ public class RunTestService {
         currentDeviseBalance = Double.parseDouble(deviseBalance);
         SortedMap<String, Map<String, String>> klinesJson = dataSettingsService.getCurrentUserDataSet();
 
+
         // boucler sur klinesJson
+        boolean first = true;
         for (Map.Entry entry : klinesJson.entrySet()) {
-            // on parse blockly avec ce jeu de valeur
+            Map<String, String> map = (Map<String, String>) entry.getValue();
+            if (first) {
+                firstOpen = map.get("open");
+                first = false;
+            }
+            lastClose = map.get("close");
             currentEntry = entry;
             BlocklyJsonParser blocklyJsonParser = new BlocklyJsonParser(blocklyJson);
             blocklyJsonParser.processEachBlock();
         }
-        return transactions;
+
+        Map<Object, Object> result = new HashMap<>();
+        Map<String, String> balances = new HashMap<>();
+
+        balances.put("new_crypto", String.valueOf(currentCryptoBalance));
+        balances.put("new_currency", String.valueOf(currentDeviseBalance));
+        balances.put("previous_crypto", cryptoBalance);
+        balances.put("previous_currency", deviseBalance);
+        balances.put("new_rate", lastClose);
+        balances.put("previous_rate", firstOpen);
+
+        double newValue = currentDeviseBalance + currentCryptoBalance * Double.parseDouble(lastClose);
+        double previousValue = Double.parseDouble(deviseBalance) + Double.parseDouble(cryptoBalance) * Double.parseDouble(firstOpen);
+
+        balances.put("new_value", String.valueOf(newValue));
+        balances.put("previous_value", String.valueOf(previousValue));
+        balances.put("result", String.valueOf(newValue - previousValue));
+
+        result.put("balances", balances);
+        result.put("transactions", transactions);
+
+        return result;
     }
 }
