@@ -55,6 +55,10 @@ $(document).ready(function () {
     validateData();
   });
 });
+// Vider le tableau et le graphe afin d'éviter des duplications d'affichage
+function clearElements(element) {
+  document.getElementById(element).innerHTML = null;
+}
 
 // Vider le tableau et le graphe afin d'éviter des duplications d'affichage
 function clearElements(element) {
@@ -91,6 +95,7 @@ function getExchangeData(symbole, devise, start_time, end_time, interval) {
 
 // Remplit le tableau des klines à partir du json renvoyé par le back
 function remplirTableauKlines(json) {
+    
   let pair = true;
   for (let key of Object.keys(json)) {
     let date = new Date(parseInt(key));

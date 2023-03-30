@@ -1,98 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="grids.css" />
-    <link rel="stylesheet" href="style.css" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="grids.css"/>
+    <link rel="stylesheet" href="style.css"/>
     <title>Blockly Trader</title>
 
     <script
-      src="https://code.jquery.com/jquery-3.6.4.min.js"
-      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
-      crossorigin="anonymous"
+            src="https://code.jquery.com/jquery-3.6.4.min.js"
+            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+            crossorigin="anonymous"
     ></script>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://unpkg.com/blockly/blockly.min.js"></script>
     <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
     <script type="application/javascript" src="app.js"></script>
-  </head>
+</head>
 
-  <body>
-    <header>
-      <img src="logo.svg" alt="Blockly Trader Logo" id="logo" />
-    </header>
+<body>
+<header>
+    <img src="logo.svg" alt="Blockly Trader Logo" id="logo"/>
+</header>
 
-    <div id="main_container">
-      <div id="bloc_data_settings" class="settings_bloc">
+<div id="main_container">
+    <div id="bloc_data_settings" class="settings_bloc">
         <span>DATA SETTINGS</span>
         <div id="input_data_parameters">
-          <label for="pair1" id="pair_label">Pair</label>
-          <select id="pair1" onchange="afficherCrypto()">
-            <option value="btc">BTC</option>
-            <option value="eth">ETH</option>
-          </select>
-          <label for="pair2" class="hidden"></label>
-          <select id="pair2" onchange="afficherDevise()">
-            <option value="usdt">USDT</option>
-          </select>
-          <label for="interval" id="interval_label">Interval</label>
-          <select id="interval">
-            <option value="1h">1 hour</option>
-            <option value="1m">1 minute</option>
-          </select>
-          <label for="start_time" id="from_label">From</label>
-          <input id="start_time" type="date" min="2018-01-01" />
-          <label for="end_time" id="to_label">To</label>
-          <input id="end_time" type="date" min="2018-01-01" />
+            <label for="pair1" id="pair_label">Pair</label>
+            <select id="pair1" onchange="afficherCrypto()">
+                <option value="btc">BTC</option>
+                <option value="eth">ETH</option>
+            </select>
+            <label for="pair2" class="hidden"></label>
+            <select id="pair2" onchange="afficherDevise()">
+                <option value="usdt">USDT</option>
+            </select>
+            <label for="interval" id="interval_label">Interval</label>
+            <select id="interval">
+                <option value="1h">1 hour</option>
+                <option value="1m">1 minute</option>
+            </select>
+            <label for="start_time" id="from_label">From</label>
+            <input id="start_time" type="date" min="2018-01-01"/>
+            <label for="end_time" id="to_label">To</label>
+            <input id="end_time" type="date" min="2018-01-01"/>
         </div>
 
         <button type="button" id="submit_button">Submit</button>
-      </div>
+    </div>
 
-      <div id="bloc_test_settings" class="settings_bloc">
+    <div id="bloc_test_settings" class="settings_bloc">
         <span>TEST SETTINGS</span>
         <div id="input_test_parameters">
-          <label for="starting_balance_crypto" id="starting_balance_crypto_label"></label>
-          <input type="text" value="0" id="starting_balance_crypto" />
-          <label for="starting_balance_currency" id="starting_balance_currency_label">USDT Balance</label>
-          <input type="text" value="1000" id="starting_balance_currency" />
-          <label for="exchange_fees" id="exchange_fees_label">Exchange Fees</label>
-          <input type="text" value="0.075" id="exchange_fees" />
+            <label for="starting_balance_crypto" id="starting_balance_crypto_label"></label>
+            <input type="text" value="0" id="starting_balance_crypto"/>
+            <label for="starting_balance_currency" id="starting_balance_currency_label">USDT Balance</label>
+            <input type="text" value="1000" id="starting_balance_currency"/>
+            <label for="exchange_fees" id="exchange_fees_label">Exchange Fees</label>
+            <input type="text" value="0.075" id="exchange_fees"/>
         </div>
         <button type="button" id="run_test_button">Run Test</button>
-      </div>
+    </div>
 
-      <div id="bloc_blockly">
+    <div id="bloc_blockly">
         <div id="blocklyDiv"></div>
-      </div>
+    </div>
+
 
       <div id="bloc_tradingview" class="to_do_bloc">
       </div>
 
-      <div id="bloc_test_results" class="to_do_bloc">
-        <p>TEST RESULTS</p>
-      </div>
 
-      <div id="bloc_klines">
+
+    <div id="bloc_klines">
         <table id="klines_table">
-          <thead>
+            <thead>
             <tr>
-              <th>Open Time</th>
-              <th>Open</th>
-              <th>Close</th>
-              <th>Low</th>
-              <th>High</th>
-              <th>Volume</th>
-              <th>Trades</th>
+                <th>Open Time</th>
+                <th>Open</th>
+                <th>Close</th>
+                <th>Low</th>
+                <th>High</th>
+                <th>Volume</th>
+                <th>Trades</th>
             </tr>
-          </thead>
-          <tbody id="klines_body"></tbody>
+            </thead>
+            <tbody id="klines_body"></tbody>
         </table>
-      </div>
     </div>
-  </body>
-  <script type="application/javascript" src="blockly.js"></script>
+
+    <div id="bloc_transactions" class="to_do_bloc">
+        <table id="transactions_table">
+            <thead>
+            <tr>
+                <th>Transactions</th>
+            </tr>
+            </thead>
+            <tbody id="test_klines_body"></tbody>
+        </table>
+    </div>
+
+    <div id="bloc_result">
+        <p id="paragraphe1"></p>
+        <p id="paragraphe2"></p>
+        <p id="paragraphe3"></p>
+        <p id="paragraphe4"></p>
+        <p id="paragraphe5"></p>
+
+    </div>
+
+</div>
+</body>
+<script type="application/javascript" src="blockly.js"></script>
 </html>
+
