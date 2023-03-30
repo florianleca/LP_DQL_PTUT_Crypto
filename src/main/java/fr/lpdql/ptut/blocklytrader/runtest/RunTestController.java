@@ -1,4 +1,4 @@
-package fr.lpdql.ptut.blocklytrader.RunTest;
+package fr.lpdql.ptut.blocklytrader.runtest;
 
 import fr.lpdql.ptut.blocklytrader.datasettings.DataSettingsController;
 import net.minidev.json.parser.ParseException;
