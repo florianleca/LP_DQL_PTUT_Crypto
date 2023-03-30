@@ -29,9 +29,7 @@ public class BuyBlock extends Block {
             } else {
                 System.out.println("Houston we've got a problem");
             }
-            double ancienSoldeDevise = RunTestService.currentDeviseBalance;
             RunTestService.currentDeviseBalance -= montantDepense;
-            double ancienSoldeCoin = RunTestService.currentCryptoBalance;
             Map<String, String> map = (Map<String, String>) RunTestService.currentEntry.getValue();
             double cryptoRate = Double.parseDouble(map.get("close"));
             RunTestService.currentCryptoBalance += montantDepense / cryptoRate;
