@@ -173,6 +173,7 @@ th {
 #bloc_blockly {
   background-color: whitesmoke;
   border-radius: 10px;
+  height: 600px;
 }
 
 #blocklyDiv {
