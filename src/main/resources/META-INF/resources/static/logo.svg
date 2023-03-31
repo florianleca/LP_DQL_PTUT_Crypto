@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="74.76mm" height="13.436mm" version="1.1" viewBox="0 0 74.76 13.436" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <style>
-    @font-face {
-    font-family: 'Ubuntu';
-    src: url('./Ubuntu-BoldItalic.ttf') format('tff');
-    font-weight: normal;
-    font-style: normal;
-    }
-    </style>
-<metadata>
-<rdf:RDF>
-<cc:Work rdf:about="">
-<dc:format>image/svg+xml</dc:format>
-<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-<dc:title/>
-</cc:Work>
-</rdf:RDF>
-</metadata>
-<g transform="translate(-67.197 -76.333)">
-<text x="68.035713" y="86.178574" fill="#ffffff" font-family="'One Slice'" font-size="10.583px" stroke="#6565f6" stroke-linejoin="round" stroke-opacity=".96" stroke-width="3.265" style="line-height:1.25;paint-order:stroke fill markers" xml:space="preserve"><tspan x="68.035713" y="86.178574" fill="#ffffff" font-family="Ubuntu" stroke="#6565f6" stroke-linejoin="round" stroke-opacity=".96" stroke-width="3.265" style="paint-order:stroke fill markers">Blockly Trader</tspan></text>
-</g>
-<g transform="translate(-67.197 -76.333)">
-<text x="68.035713" y="86.178574" fill="#ffffff" font-family="'One Slice'" font-size="10.583px" stroke-width=".26458" style="line-height:1.25" xml:space="preserve"><tspan x="68.035713" y="86.178574" fill="#ffffff" font-family="Ubuntu" stroke-width=".26458">Blockly Trader</tspan></text>
-</g>
+<svg width="74.76mm" height="13.436mm" version="1.1" viewBox="0 0 74.76 13.436" xmlns="http://www.w3.org/2000/svg"
+      xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <defs>
+        <style>
+            @font-face {
+            font-family: 'Ubuntu';
+            src: url('./Ubuntu-BoldItalic.ttf') format('ttf');
+            font-weight: normal;
+            font-style: normal;
+            }
+        </style>
+    </defs>
+    <metadata>
+        <rdf:RDF>
+            <cc:Work rdf:about="">
+                <dc:format>image/svg+xml</dc:format>
+                <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+                <dc:title/>
+            </cc:Work>
+        </rdf:RDF>
+    </metadata>
+    <g transform="translate(-67.197 -76.333)">
+        <text x="68.035713" y="86.178574" fill="#ffffff" font-family="'One Slice'" font-size="10.583px" stroke="#6565f6"
+              stroke-linejoin="round" stroke-opacity=".96" stroke-width="3.265"
+              style="line-height:1.25;paint-order:stroke fill markers" xml:space="preserve"><tspan x="68.035713" y="86.178574" fill="#ffffff" font-family="Ubuntu" stroke="#6565f6" stroke-linejoin="round" stroke-opacity=".96" stroke-width="3.265" style="paint-order:stroke fill markers">Blockly Trader</tspan></text>
+    </g>
+    <g transform="translate(-67.197 -76.333)">
+        <text x="68.035713" y="86.178574" fill="#ffffff" font-family="'One Slice'" font-size="10.583px"
+              stroke-width=".26458" style="line-height:1.25" xml:space="preserve"><tspan x="68.035713" y="86.178574" fill="#ffffff" font-family="Ubuntu" stroke-width=".26458">Blockly Trader</tspan></text>
+    </g>
 
 </svg>
