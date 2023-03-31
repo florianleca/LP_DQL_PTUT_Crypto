@@ -1,4 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="282.557" height="50.782" viewBox="0 0 74.76 13.436">
-    <text x="68.036" y="86.179" fill="#fff" font-family="One Slice" font-size="10.583" stroke="#6565f6" xml:space="preserve" paint-order="stroke fill markers"><tspan x="0.839" y="9.846" font-family="Ubuntu" stroke-linejoin="round" stroke-opacity=".96" stroke-width="3.265">Blockly Trader</tspan></text>
-    <text x="68.036" y="86.179" fill="#fff" font-family="One Slice" font-size="10.583" xml:space="preserve"><tspan x="0.839" y="9.846" font-family="Ubuntu">Blockly Trader</tspan></text>
+    <style type="text/css">
+        @font-face {
+        font-family: 'Ubuntu';
+        src: url('Ubuntu-BoldItalic.woff') format('woff');
+        }
+    </style>
+    <text x="68.036" y="86.179" fill="#fff" font-family="Ubuntu" font-size="10.583" stroke="#6565f6"
+          xml:space="preserve" paint-order="stroke fill markers"><tspan x="0.839" y="9.846" stroke-linejoin="round" stroke-opacity=".96" stroke-width="3.265">Blockly Trader</tspan></text>
+    <text x="68.036" y="86.179" fill="#fff" font-family="Ubuntu" font-size="10.583" xml:space="preserve"><tspan x="0.839" y="9.846">Blockly Trader</tspan></text>
+
 </svg>
