@@ -41,7 +41,7 @@ Blockly.Blocks["sell"] = {
 // Définition du bloc personnalisé "klines_variables"
 Blockly.Blocks["klines_variables"] = {
     init: function () {
-        var DATA_OPTIONS = [
+        let DATA_OPTIONS = [
             ["open", "open"],
             ["close", "close"],
             ["low", "low"],
@@ -60,7 +60,7 @@ Blockly.Blocks["klines_variables"] = {
 };
 
 // Construction de la toolbox formée des blocs de notre choix
-var toolbox = {
+let toolbox = {
     kind: "flyoutToolbox",
     contents: [
         {
@@ -101,15 +101,115 @@ var toolbox = {
     ],
 };
 
+
 // Injection de blockly et de sa toolbox dans le html
 const workspace = Blockly.inject("blocklyDiv", {toolbox: toolbox});
+let defaultBlocks = {
+    "blocks": {
+        "languageVersion": 0,
+        "blocks": [{
+            "type": "controls_if",
+            "id": "k38QBFRc~G9guEH,SoA_",
+            "x": 202,
+            "y": 97,
+            "inputs": {
+                "IF0": {
+                    "block": {
+                        "type": "logic_compare",
+                        "id": "PdHKdY)7Ub]C3_XKGju1",
+                        "fields": {"OP": "LT"},
+                        "inputs": {
+                            "A": {
+                                "block": {
+                                    "type": "klines_variables",
+                                    "id": "Z}C,{rjp$|+P1+aM3*mJ",
+                                    "fields": {"DATA_TYPE": "close"}
+                                }
+                            },
+                            "B": {
+                                "block": {
+                                    "type": "math_number",
+                                    "id": "}M`QNb3UFRbf3-PnC^$t",
+                                    "fields": {"NUM": 27500}
+                                }
+                            }
+                        }
+                    }
+                },
+                "DO0": {
+                    "block": {
+                        "type": "buy",
+                        "id": "2/YZpGq-v06Dc/E(+%u1",
+                        "fields": {"UNIT": "$"},
+                        "inputs": {
+                            "VALUE": {
+                                "block": {
+                                    "type": "math_number",
+                                    "id": "%#hcJM0DqeC/FY:;{kK",
+                                    "fields": {"NUM": 10}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }, {
+            "type": "controls_if",
+            "id": "_H0WQPP{#OE,1ZYnR7_M",
+            "x": 192,
+            "y": 262,
+            "inputs": {
+                "IF0": {
+                    "block": {
+                        "type": "logic_compare",
+                        "id": "o`GVeX6:(W^niXLHDR@]",
+                        "fields": {"OP": "GTE"},
+                        "inputs": {
+                            "A": {
+                                "block": {
+                                    "type": "klines_variables",
+                                    "id": "BDzip?_@AypJZ9Uc(QT`",
+                                    "fields": {"DATA_TYPE": "close"}
+                                }
+                            },
+                            "B": {
+                                "block": {
+                                    "type": "math_number",
+                                    "id": ";49xVz7YC=),tohqPOY2",
+                                    "fields": {"NUM": 28100}
+                                }
+                            }
+                        }
+                    }
+                },
+                "DO0": {
+                    "block": {
+                        "type": "sell",
+                        "id": "gYvOZQvF6+OUWdi=|ce0",
+                        "fields": {"UNIT": "%"},
+                        "inputs": {
+                            "VALUE": {
+                                "block": {
+                                    "type": "math_number",
+                                    "id": ".DF(AWF-LVqAyplo_cJS",
+                                    "fields": {"NUM": 10}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }]
+    }
+};
+Blockly.serialization.workspaces.load(defaultBlocks, workspace);
+
 
 // Lance l'action lorsqu'on clique sur "Run Test"
 $(document).ready(function () {
     $("#run_test_button").click(function () {
         const test = Blockly.serialization.workspaces.save(workspace);
         console.log(JSON.stringify(test)); // Garder cette ligne qui peut être pratique pour debug
-        // Envoyer le json au back via Ajax (cf précédent bouton)
         clearElements("test_klines_body")
         valideTest();
     });
@@ -158,13 +258,13 @@ function remplirTransactions(json) {
         let date = new Date(parseInt(key));
         date = formatageDateTableauKlines(date);
         var bos = "Vente de ";
-        if (json[key].type == 'buy') {
+        if (json[key].type === 'buy') {
             bos = "Achat de ";
         }
         $('#test_klines_body').append(
             '<tr class="' +
             pariteLigne(pair) +
-            '"><td>' + date + " : " + bos + json[key].crypto_amount + " " + document.getElementById("pair1").value + " pour " + json[key].currency_amount + " " + document.getElementById("pair2").value + "." + "</td>"
+            '"><td>' + date + " : " + bos + document.getElementById("pair1").value.toUpperCase() + " pour " + json[key].currency_amount + " " + document.getElementById("pair2").value.toUpperCase() + "." + "</td>"
         )
         pair = !pair
     }
@@ -177,37 +277,7 @@ function remplirResult(json) {
     let valorisation2 = "À la fin du test, le porte-feuille est valorisé à " + json['new_value'] + ".";
     let result = "Résultat global : " + json['result'];
 
-    let paragraphe1 = document.getElementById("paragraphe1");
-    paragraphe1.innerHTML = variationCrypto;
-
-    let paragraphe2 = document.getElementById("paragraphe2");
-    paragraphe2.innerHTML = variationCurrency;
-
-    let paragraphe3 = document.getElementById("paragraphe3");
-    paragraphe3.innerHTML = valorisation1;
-
-    let paragraphe4 = document.getElementById("paragraphe4");
-    paragraphe4.innerHTML = valorisation2;
-
-    let paragraphe5 = document.getElementById("paragraphe5");
-    paragraphe5.innerHTML = result;
+    let resultats = document.getElementById("resultats");
+    resultats.innerHTML = variationCrypto + "</br>" + variationCurrency + "</br>" + valorisation1 + "</br>" + valorisation2 + "</br>" + result;
 }
 
-// Sert à remplir les lignes avec 2 couleurs en alternance
-function pariteLigne(bool) {
-    let classe = "lignePaire";
-    if (!bool) {
-        classe = "ligneImpaire";
-    }
-    return classe;
-}
-
-// Formate une date au format "jj/mm/aa - hh:mm"
-function formatageDateTableauKlines(date) {
-    let day = date.getDate().toString().padStart(2, "0");
-    let month = (date.getMonth() + 1).toString().padStart(2, "0");
-    let year = date.getFullYear().toString().slice(-2);
-    let hour = date.getHours().toString().padStart(2, "0");
-    let minutes = date.getMinutes().toString().padStart(2, "0");
-    return day + "/" + month + "/" + year + " - " + hour + ":" + minutes;
-}

@@ -194,7 +194,7 @@ th {
 }
 
 .injectionDiv {
-    border-radius: 8.5px;
+    border-radius: 9px;
 }
 
 .blocklyDropdownMenu * {
@@ -229,8 +229,7 @@ thead {
 }
 
 #transactions_table td {
-    padding: 5px 0;
-    padding-left: 5px;
+    padding: 5px;
 }
 
 #bloc_result {
@@ -238,9 +237,11 @@ thead {
     border-radius: 10px;
     width: 100%;
     text-align: left;
-    padding-left: 1%;
-    padding-top: 1%;
+    padding-left: 5px;
     overflow: auto;
     line-height: 18px;
     font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
