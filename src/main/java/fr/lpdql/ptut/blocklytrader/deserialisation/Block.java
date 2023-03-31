@@ -20,7 +20,6 @@ public abstract class Block {
         JSONObject blockBis = new JSONObject(block);
         String valueString = (JsonPath.read(blockBis, "$.fields.NUM")).toString();
         double value = Double.parseDouble(valueString);
-        System.out.println("Ce membre est un nombre, sa valeur est " + value);
         return value;
     }
 
@@ -28,9 +27,7 @@ public abstract class Block {
         JSONObject blockBis = new JSONObject(block);
         String variable = JsonPath.read(blockBis, "$.fields.DATA_TYPE");
         Map<String, String> map = (Map<String, String>) RunTestService.currentEntry.getValue();
-        double value = Double.parseDouble(map.get(variable));
-        System.out.println("Variable : " + variable + " ; sa valeur est " + value);
-        return value;
+        return Double.parseDouble(map.get(variable));
     }
 
 
@@ -47,7 +44,6 @@ public abstract class Block {
             case "logic_operation" -> result = new LogicOperationBlock(block).getResult();
             default -> System.out.println("Block de type 'booléen' inconnu");
         }
-        System.out.println("Le résultat est : " + result);
         return result;
     }
 
