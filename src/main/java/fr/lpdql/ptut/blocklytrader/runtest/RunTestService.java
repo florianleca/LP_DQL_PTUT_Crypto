@@ -37,9 +37,7 @@ public class RunTestService {
         transactions.put(timestamp, map);
     }
 
-    public Map<Object, Object> getTestResult(String blocklyJson,
-                                             String cryptoBalance,
-                                             String deviseBalance,
+    public Map<Object, Object> getTestResult(String blocklyJson, String cryptoBalance, String deviseBalance,
                                              String exchangeFees) throws ParseException {
         transactions = new TreeMap<>();
         currentCryptoBalance = Double.parseDouble(cryptoBalance);
@@ -80,7 +78,8 @@ public class RunTestService {
         balances.put("new_rate", lastClose);
         balances.put("previous_rate", firstOpen);
         double newValue = currentDeviseBalance + currentCryptoBalance * Double.parseDouble(lastClose);
-        double previousValue = Double.parseDouble(deviseBalance) + Double.parseDouble(cryptoBalance) * Double.parseDouble(firstOpen);
+        double previousValue =
+                Double.parseDouble(deviseBalance) + Double.parseDouble(cryptoBalance) * Double.parseDouble(firstOpen);
         balances.put("new_value", String.valueOf(newValue));
         balances.put("previous_value", String.valueOf(previousValue));
         balances.put("result", String.valueOf(newValue - previousValue));

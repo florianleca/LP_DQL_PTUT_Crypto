@@ -1,8 +1,9 @@
 package fr.lpdql.ptut.blocklytrader.deserialisation;
 
+import com.jayway.jsonpath.JsonPath;
+
 import java.util.Map;
 
-import com.jayway.jsonpath.JsonPath;
 public class LogicCompareBlock extends Block {
     private final String operation;
     private final double memberA;

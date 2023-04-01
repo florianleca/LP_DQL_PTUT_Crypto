@@ -1,8 +1,8 @@
 package fr.lpdql.ptut.blocklytrader.deserialisation;
 
-import java.util.Map;
-
 import com.jayway.jsonpath.JsonPath;
+
+import java.util.Map;
 
 public class MathArithmeticBlock extends Block {
 

@@ -23,7 +23,8 @@ public class DataSettingsService {
 
     private SortedMap<String, Map<String, String>> currentUserDataSet;
 
-    public Map<String, Map<String, String>> getJsonFromDataBase(String crypto, String devise, String frequency, String startTime, String endTime) throws SQLException {
+    public Map<String, Map<String, String>> getJsonFromDataBase(String crypto, String devise, String frequency,
+                                                                String startTime, String endTime) throws SQLException {
         String nomDeLaTable = crypto + "_" + devise + "_" + frequency;
         SortedMap<String, Map<String, String>> json = new TreeMap<>();
         ResultSet resultat = executeDataBaseQuery(nomDeLaTable, startTime, endTime);

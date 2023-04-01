@@ -44,7 +44,8 @@ public class UpdaterMaster {
             String interval = matcher.group(3);
             String symbol = crypto.toUpperCase() + currency.toUpperCase();
 
-            DataBaseUpdater updater = new DataBaseUpdater(symbol, interval, new MySQLConnector(url, tableName, utilisateur, motDePasse));
+            DataBaseUpdater updater = new DataBaseUpdater(symbol, interval, new MySQLConnector(url, tableName,
+                    utilisateur, motDePasse));
             localUpdaters.add(updater);
         }
         this.updaters = localUpdaters;
