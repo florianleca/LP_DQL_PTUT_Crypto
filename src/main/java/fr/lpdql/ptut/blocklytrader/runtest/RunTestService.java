@@ -15,7 +15,7 @@ import java.util.TreeMap;
 public class RunTestService {
 
     public static SortedMap<String, Map<String, String>> transactions = new TreeMap<>();
-    public static Map.Entry currentEntry;
+    public static Map.Entry<String, Map<String, String>> currentEntry;
     public static double currentCryptoBalance;
     public static double currentDeviseBalance;
 
@@ -33,7 +33,7 @@ public class RunTestService {
         map.put("crypto_amount", String.valueOf(cryptoAmount));
         map.put("currency_amount", String.valueOf(currencyAmount));
         map.put("rate", String.valueOf(rate));
-        String timestamp = (String) currentEntry.getKey();
+        String timestamp = currentEntry.getKey();
         transactions.put(timestamp, map);
     }
 
@@ -45,8 +45,8 @@ public class RunTestService {
         SortedMap<String, Map<String, String>> klinesJson = dataSettingsService.getCurrentUserDataSet();
 
         boolean first = true;
-        for (Map.Entry entry : klinesJson.entrySet()) {
-            Map<String, String> map = (Map<String, String>) entry.getValue();
+        for (Map.Entry<String, Map<String, String>> entry : klinesJson.entrySet()) {
+            Map<String, String> map = entry.getValue();
             if (first) {
                 firstOpen = map.get("open");
                 first = false;

@@ -19,8 +19,7 @@ public abstract class Block {
     protected double valueFromMathNumber(Map<String, String> block) {
         JSONObject blockBis = new JSONObject(block);
         String valueString = (JsonPath.read(blockBis, "$.fields.NUM")).toString();
-        double value = Double.parseDouble(valueString);
-        return value;
+        return Double.parseDouble(valueString);
     }
 
     private double valueFromKlinesVariable(Map<String, String> block) {

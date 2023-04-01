@@ -38,15 +38,15 @@ public class UpdaterMaster {
         for (String tableName : tablesNames) {
             Pattern pattern = Pattern.compile("([^_]+)_([^_]+)_(.+)");
             Matcher matcher = pattern.matcher(tableName);
-            matcher.matches();
-            String crypto = matcher.group(1);
-            String currency = matcher.group(2);
-            String interval = matcher.group(3);
-            String symbol = crypto.toUpperCase() + currency.toUpperCase();
+            if (matcher.matches()) {
+                String crypto = matcher.group(1);
+                String currency = matcher.group(2);
+                String interval = matcher.group(3);
+                String symbol = crypto.toUpperCase() + currency.toUpperCase();
 
-            DataBaseUpdater updater = new DataBaseUpdater(symbol, interval, new MySQLConnector(url, tableName,
-                    utilisateur, motDePasse));
-            localUpdaters.add(updater);
+                DataBaseUpdater updater = new DataBaseUpdater(symbol, interval, new MySQLConnector(url, tableName, utilisateur, motDePasse));
+                localUpdaters.add(updater);
+            }
         }
         this.updaters = localUpdaters;
     }

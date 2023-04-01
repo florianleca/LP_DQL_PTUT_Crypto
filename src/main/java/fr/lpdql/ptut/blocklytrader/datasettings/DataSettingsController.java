@@ -15,8 +15,12 @@ public class DataSettingsController {
 
     private final Logger logger = LoggerFactory.getLogger(DataSettingsController.class);
 
+    private final DataSettingsService dataSettingsService;
+
     @Autowired
-    private DataSettingsService dataSettingsService;
+    public DataSettingsController(DataSettingsService dataSettingsService) {
+        this.dataSettingsService = dataSettingsService;
+    }
 
     @GetMapping("/getdata/{crypto}/{devise}")
     public Map<String, Map<String, String>> submitData(@PathVariable String crypto, @PathVariable String devise,
