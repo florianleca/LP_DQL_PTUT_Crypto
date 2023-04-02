@@ -1,3 +1,5 @@
+let workspace = null;
+
 // Définition du bloc personnalisé "buy"
 Blockly.Blocks["buy"] = {
     init: function () {
@@ -103,106 +105,108 @@ let toolbox = {
 
 
 // Injection de blockly et de sa toolbox dans le html
-const workspace = Blockly.inject("blocklyDiv", {toolbox: toolbox});
-let defaultBlocks = {
-    "blocks": {
-        "languageVersion": 0,
-        "blocks": [{
-            "type": "controls_if",
-            "id": "k38QBFRc~G9guEH,SoA_",
-            "x": 202,
-            "y": 97,
-            "inputs": {
-                "IF0": {
-                    "block": {
-                        "type": "logic_compare",
-                        "id": "PdHKdY)7Ub]C3_XKGju1",
-                        "fields": {"OP": "LT"},
-                        "inputs": {
-                            "A": {
-                                "block": {
-                                    "type": "klines_variables",
-                                    "id": "Z}C,{rjp$|+P1+aM3*mJ",
-                                    "fields": {"DATA_TYPE": "close"}
-                                }
-                            },
-                            "B": {
-                                "block": {
-                                    "type": "math_number",
-                                    "id": "}M`QNb3UFRbf3-PnC^$t",
-                                    "fields": {"NUM": 27500}
-                                }
-                            }
-                        }
-                    }
-                },
-                "DO0": {
-                    "block": {
-                        "type": "buy",
-                        "id": "2/YZpGq-v06Dc/E(+%u1",
-                        "fields": {"UNIT": "$"},
-                        "inputs": {
-                            "VALUE": {
-                                "block": {
-                                    "type": "math_number",
-                                    "id": "%#hcJM0DqeC/FY:;{kK",
-                                    "fields": {"NUM": 10}
+function injectBlockly() {
+    workspace = Blockly.inject("blocklyDiv", {toolbox: toolbox});
+    let defaultBlocks = {
+        "blocks": {
+            "languageVersion": 0,
+            "blocks": [{
+                "type": "controls_if",
+                "id": "k38QBFRc~G9guEH,SoA_",
+                "x": 202,
+                "y": 97,
+                "inputs": {
+                    "IF0": {
+                        "block": {
+                            "type": "logic_compare",
+                            "id": "PdHKdY)7Ub]C3_XKGju1",
+                            "fields": {"OP": "LT"},
+                            "inputs": {
+                                "A": {
+                                    "block": {
+                                        "type": "klines_variables",
+                                        "id": "Z}C,{rjp$|+P1+aM3*mJ",
+                                        "fields": {"DATA_TYPE": "close"}
+                                    }
+                                },
+                                "B": {
+                                    "block": {
+                                        "type": "math_number",
+                                        "id": "}M`QNb3UFRbf3-PnC^$t",
+                                        "fields": {"NUM": 27500}
+                                    }
                                 }
                             }
                         }
-                    }
-                }
-            }
-        }, {
-            "type": "controls_if",
-            "id": "_H0WQPP{#OE,1ZYnR7_M",
-            "x": 192,
-            "y": 262,
-            "inputs": {
-                "IF0": {
-                    "block": {
-                        "type": "logic_compare",
-                        "id": "o`GVeX6:(W^niXLHDR@]",
-                        "fields": {"OP": "GTE"},
-                        "inputs": {
-                            "A": {
-                                "block": {
-                                    "type": "klines_variables",
-                                    "id": "BDzip?_@AypJZ9Uc(QT`",
-                                    "fields": {"DATA_TYPE": "close"}
-                                }
-                            },
-                            "B": {
-                                "block": {
-                                    "type": "math_number",
-                                    "id": ";49xVz7YC=),tohqPOY2",
-                                    "fields": {"NUM": 28100}
-                                }
-                            }
-                        }
-                    }
-                },
-                "DO0": {
-                    "block": {
-                        "type": "sell",
-                        "id": "gYvOZQvF6+OUWdi=|ce0",
-                        "fields": {"UNIT": "%"},
-                        "inputs": {
-                            "VALUE": {
-                                "block": {
-                                    "type": "math_number",
-                                    "id": ".DF(AWF-LVqAyplo_cJS",
-                                    "fields": {"NUM": 10}
+                    },
+                    "DO0": {
+                        "block": {
+                            "type": "buy",
+                            "id": "2/YZpGq-v06Dc/E(+%u1",
+                            "fields": {"UNIT": "$"},
+                            "inputs": {
+                                "VALUE": {
+                                    "block": {
+                                        "type": "math_number",
+                                        "id": "%#hcJM0DqeC/FY:;{kK",
+                                        "fields": {"NUM": 10}
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-        }]
-    }
-};
-Blockly.serialization.workspaces.load(defaultBlocks, workspace);
+            }, {
+                "type": "controls_if",
+                "id": "_H0WQPP{#OE,1ZYnR7_M",
+                "x": 192,
+                "y": 262,
+                "inputs": {
+                    "IF0": {
+                        "block": {
+                            "type": "logic_compare",
+                            "id": "o`GVeX6:(W^niXLHDR@]",
+                            "fields": {"OP": "GTE"},
+                            "inputs": {
+                                "A": {
+                                    "block": {
+                                        "type": "klines_variables",
+                                        "id": "BDzip?_@AypJZ9Uc(QT`",
+                                        "fields": {"DATA_TYPE": "close"}
+                                    }
+                                },
+                                "B": {
+                                    "block": {
+                                        "type": "math_number",
+                                        "id": ";49xVz7YC=),tohqPOY2",
+                                        "fields": {"NUM": 28100}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "DO0": {
+                        "block": {
+                            "type": "sell",
+                            "id": "gYvOZQvF6+OUWdi=|ce0",
+                            "fields": {"UNIT": "%"},
+                            "inputs": {
+                                "VALUE": {
+                                    "block": {
+                                        "type": "math_number",
+                                        "id": ".DF(AWF-LVqAyplo_cJS",
+                                        "fields": {"NUM": 10}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }]
+        }
+    };
+    Blockly.serialization.workspaces.load(defaultBlocks, workspace);
+}
 
 
 // Lance l'action lorsqu'on clique sur "Run Test"

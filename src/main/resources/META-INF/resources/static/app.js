@@ -1,6 +1,7 @@
 // Définit les fonctions à exécuter au chargement de la page
 window.onload = function () {
     //var chart = new ApexCharts(document.querySelector("#bloc_tradingview"), {});
+    injectBlockly();
     afficherCrypto();
     afficherDevise();
     manageCalendars();
