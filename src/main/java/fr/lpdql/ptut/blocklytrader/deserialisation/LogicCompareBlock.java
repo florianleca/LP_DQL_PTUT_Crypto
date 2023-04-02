@@ -21,34 +21,17 @@ public class LogicCompareBlock extends Block {
 
     // un block logic_compare doit renvoyer un boolean
     public boolean processBlock() {
+        boolean result = false;
         switch (operation) {
-            case "EQ" -> {
-                System.out.println("Opération =");
-                return memberA == memberB;
-            }
-            case "NEQ" -> {
-                System.out.println("Opération !=");
-                return memberA != memberB;
-            }
-            case "LT" -> {
-                System.out.println("Opération <");
-                return memberA < memberB;
-            }
-            case "LTE" -> {
-                System.out.println("Opération <=");
-                return memberA <= memberB;
-            }
-            case "GT" -> {
-                System.out.println("Opération >");
-                return memberA > memberB;
-            }
-            case "GTE" -> {
-                System.out.println("Opération >=");
-                return memberA >= memberB;
-            }
-            default -> System.out.println("Opération non reconnue ");
+            case "EQ" -> result = memberA == memberB;
+            case "NEQ" -> result = memberA != memberB;
+            case "LT" -> result = memberA < memberB;
+            case "LTE" -> result = memberA <= memberB;
+            case "GT" -> result = memberA > memberB;
+            case "GTE" -> result = memberA >= memberB;
+            default -> logger.warn("Operation de bloc 'LogicCompareBlock' non reconnue : " + operation);
         }
-        return false;
+        return result;
     }
 
     public boolean getResult() {

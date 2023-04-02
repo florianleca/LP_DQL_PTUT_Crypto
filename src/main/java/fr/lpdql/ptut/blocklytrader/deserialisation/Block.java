@@ -1,13 +1,17 @@
 package fr.lpdql.ptut.blocklytrader.deserialisation;
 
 import com.jayway.jsonpath.JsonPath;
+import fr.lpdql.ptut.blocklytrader.datasettings.DataSettingsController;
 import fr.lpdql.ptut.blocklytrader.runtest.RunTestService;
 import net.minidev.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 public abstract class Block {
 
+    protected final Logger logger = LoggerFactory.getLogger(DataSettingsController.class);
     protected Map<String, String> blockMap;
     protected JSONObject blockJson;
 
@@ -40,7 +44,7 @@ public abstract class Block {
         switch (type) {
             case "logic_compare" -> result = new LogicCompareBlock(block).getResult();
             case "logic_operation" -> result = new LogicOperationBlock(block).getResult();
-            default -> System.out.println("Block de type 'booléen' inconnu");
+            default -> logger.warn("Type de bloc 'booléen' non reconnu : " + type);
         }
         return result;
     }
@@ -57,7 +61,7 @@ public abstract class Block {
             case "math_number" -> value = valueFromMathNumber(block);
             case "math_arithmetic" -> value = new MathArithmeticBlock(block).getResult();
             case "klines_variables" -> value = valueFromKlinesVariable(block);
-            default -> System.out.println("Bloc valeur non reconnu");
+            default -> logger.warn("Type de bloc 'valeur' non reconnu : " + type);
         }
         return value;
     }

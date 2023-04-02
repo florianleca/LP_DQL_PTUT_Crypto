@@ -21,30 +21,16 @@ public class MathArithmeticBlock extends Block {
 
     // un block math_arithmetic doit renvoyer un double
     public double processBlock() {
+        double result = 0;
         switch (operation) {
-            case "ADD" -> {
-                System.out.println("Opération ADD");
-                return memberA + memberB;
-            }
-            case "MINUS" -> {
-                System.out.println("Opération MINUS");
-                return memberA - memberB;
-            }
-            case "MULTIPLY" -> {
-                System.out.println("Opération MULTIPLY");
-                return memberA * memberB;
-            }
-            case "DIVIDE" -> {
-                System.out.println("Opération DIVIDE");
-                return memberA / memberB;
-            }
-            case "POWER" -> {
-                System.out.println("Opération POWER");
-                return Math.pow(memberA, memberB);
-            }
-            default -> System.out.println("Opération non reconnue ");
+            case "ADD" -> result = memberA + memberB;
+            case "MINUS" -> result = memberA - memberB;
+            case "MULTIPLY" -> result = memberA * memberB;
+            case "DIVIDE" -> result = memberA / memberB;
+            case "POWER" -> result = Math.pow(memberA, memberB);
+            default -> logger.warn("Operation de bloc 'MathArithmeticBlock' non reconnue : " + operation);
         }
-        return -1;
+        return result;
     }
 
     public double getResult() {

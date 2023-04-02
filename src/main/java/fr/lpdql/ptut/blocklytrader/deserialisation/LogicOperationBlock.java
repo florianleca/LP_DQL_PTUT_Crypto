@@ -21,18 +21,13 @@ public class LogicOperationBlock extends Block {
 
     // un block logic_compare doit renvoyer un boolean
     public boolean processBlock() {
+        boolean result = false;
         switch (operation) {
-            case "AND" -> {
-                System.out.println("\nOpération AND");
-                return memberA && memberB;
-            }
-            case "OR" -> {
-                System.out.println("\nOpération OR");
-                return memberA || memberB;
-            }
-            default -> System.out.println("\nOpération non reconnue ");
+            case "AND" -> result = memberA && memberB;
+            case "OR" -> result = memberA || memberB;
+            default -> logger.warn("Operation de bloc 'LogicOperationBlock' non reconnue : " + operation);
         }
-        return false;
+        return result;
     }
 
     public boolean getResult() {

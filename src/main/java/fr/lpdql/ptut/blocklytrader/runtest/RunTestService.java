@@ -18,6 +18,7 @@ public class RunTestService {
     public static Map.Entry<String, Map<String, String>> currentEntry;
     public static double currentCryptoBalance;
     public static double currentDeviseBalance;
+    public static double exchangeFees;
     public static String firstOpen;
     public static String lastClose;
     private final DataSettingsService dataSettingsService;
@@ -39,19 +40,15 @@ public class RunTestService {
 
     public Map<Object, Object> getTestResult(String blocklyJson, String cryptoBalance, String deviseBalance,
                                              String exchangeFees) throws ParseException {
-        transactions = new TreeMap<>();
-        currentCryptoBalance = Double.parseDouble(cryptoBalance);
-        currentDeviseBalance = Double.parseDouble(deviseBalance);
         SortedMap<String, Map<String, String>> klinesJson = dataSettingsService.getCurrentUserDataSet();
-        boolean first = true;
+        RunTestService.currentCryptoBalance = Double.parseDouble(cryptoBalance);
+        RunTestService.currentDeviseBalance = Double.parseDouble(deviseBalance);
+        RunTestService.exchangeFees = Double.parseDouble(exchangeFees);
+        RunTestService.firstOpen = klinesJson.get(klinesJson.firstKey()).get("open");
+        RunTestService.lastClose = klinesJson.get(klinesJson.lastKey()).get("close");
+        RunTestService.transactions = new TreeMap<>();
         for (Map.Entry<String, Map<String, String>> entry : klinesJson.entrySet()) {
-            Map<String, String> map = entry.getValue();
-            if (first) {
-                firstOpen = map.get("open");
-                first = false;
-            }
-            lastClose = map.get("close");
-            currentEntry = entry;
+            RunTestService.currentEntry = entry;
             BlocklyJsonParser blocklyJsonParser = new BlocklyJsonParser(blocklyJson);
             blocklyJsonParser.processEachBlock();
         }
@@ -68,15 +65,15 @@ public class RunTestService {
 
     public Map<String, String> createBalanceJson(String cryptoBalance, String deviseBalance) {
         Map<String, String> balances = new HashMap<>();
+        double newValue = currentDeviseBalance + currentCryptoBalance * Double.parseDouble(lastClose);
+        double previousValue =
+                Double.parseDouble(deviseBalance) + Double.parseDouble(cryptoBalance) * Double.parseDouble(firstOpen);
         balances.put("new_crypto", String.valueOf(currentCryptoBalance));
         balances.put("new_currency", String.valueOf(currentDeviseBalance));
         balances.put("previous_crypto", cryptoBalance);
         balances.put("previous_currency", deviseBalance);
         balances.put("new_rate", lastClose);
         balances.put("previous_rate", firstOpen);
-        double newValue = currentDeviseBalance + currentCryptoBalance * Double.parseDouble(lastClose);
-        double previousValue =
-                Double.parseDouble(deviseBalance) + Double.parseDouble(cryptoBalance) * Double.parseDouble(firstOpen);
         balances.put("new_value", String.valueOf(newValue));
         balances.put("previous_value", String.valueOf(previousValue));
         balances.put("result", String.valueOf(newValue - previousValue));

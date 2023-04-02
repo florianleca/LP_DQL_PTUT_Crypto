@@ -21,16 +21,13 @@ public class BuyBlock extends Block {
     private void makeTransaction() {
         if (RunTestService.currentDeviseBalance != 0) {
             double spentAmount = 0.;
-            if (unit.equals("%")) {
-                spentAmount = (amount / 100.) * RunTestService.currentDeviseBalance;
-            } else if (unit.equals("$")) {
-                spentAmount = Math.min(amount, RunTestService.currentDeviseBalance);
-            } else {
-                System.out.println("Houston we've got a problem");
+            switch (unit) {
+                case "%" -> spentAmount = (amount / 100.) * RunTestService.currentDeviseBalance;
+                case "$" -> spentAmount = Math.min(amount, RunTestService.currentDeviseBalance);
+                default -> logger.warn("Transaction de bloc 'BuyBlock' non reconnue : " + unit);
             }
             RunTestService.currentDeviseBalance -= spentAmount;
-            Map<String, String> map = RunTestService.currentEntry.getValue();
-            double cryptoRate = Double.parseDouble(map.get("close"));
+            double cryptoRate = Double.parseDouble(RunTestService.currentEntry.getValue().get("close"));
             RunTestService.currentCryptoBalance += spentAmount / cryptoRate;
             RunTestService.addTransaction("buy", spentAmount / cryptoRate, spentAmount, cryptoRate);
         }

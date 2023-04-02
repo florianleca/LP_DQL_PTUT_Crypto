@@ -21,16 +21,13 @@ public class SellBlock extends Block {
     private void makeTransaction() {
         if (RunTestService.currentCryptoBalance != 0) {
             double spentCrypto = 0.;
-            if (unit.equals("%")) {
-                spentCrypto = (amount / 100.) * RunTestService.currentCryptoBalance;
-            } else if (unit.equals("$")) {
-                spentCrypto = Math.min(amount, RunTestService.currentCryptoBalance);
-            } else {
-                System.out.println("Houston we've got a problem");
+            switch (unit) {
+                case "%" -> spentCrypto = (amount / 100.) * RunTestService.currentCryptoBalance;
+                case "$" -> spentCrypto = Math.min(amount, RunTestService.currentCryptoBalance);
+                default -> logger.warn("Transaction de bloc 'SellBlock' non reconnue : " + unit);
             }
             RunTestService.currentCryptoBalance -= spentCrypto;
-            Map<String, String> map = RunTestService.currentEntry.getValue();
-            double cryptoRate = Double.parseDouble(map.get("close"));
+            double cryptoRate = Double.parseDouble(RunTestService.currentEntry.getValue().get("close"));
             RunTestService.currentDeviseBalance += spentCrypto * cryptoRate;
             RunTestService.addTransaction("sell", spentCrypto, spentCrypto * cryptoRate, cryptoRate);
         }
