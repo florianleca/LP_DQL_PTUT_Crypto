@@ -92,7 +92,6 @@ function getExchangeData(symbole, devise, start_time, end_time, interval) {
 
 // Remplit le tableau des klines à partir du json renvoyé par le back
 function remplirTableauKlines(json) {
-
     let pair = true;
     for (let key of Object.keys(json)) {
         let date = new Date(parseInt(key));
@@ -103,17 +102,17 @@ function remplirTableauKlines(json) {
             '"><td>' +
             dateformat +
             "</td><td>" +
-            json[key].open +
+            json[key]['open'] +
             "</td><td>" +
-            json[key].close +
+            json[key]['close'] +
             "</td><td>" +
-            json[key].low +
+            json[key]['low'] +
             "</td><td>" +
-            json[key].high +
+            json[key]['high'] +
             "</td><td>" +
-            json[key].volume +
+            json[key]['volume'] +
             "</td><td>" +
-            json[key].number_of_trades +
+            json[key]['number_of_trades'] +
             "</td></tr>"
         );
         pair = !pair;
