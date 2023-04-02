@@ -8,7 +8,6 @@ import java.util.Map;
 public class SellBlock extends Block {
 
     private final String unit;
-
     private final double amount;
 
     protected SellBlock(Map<String, String> block) {
@@ -21,20 +20,20 @@ public class SellBlock extends Block {
 
     private void makeTransaction() {
         if (RunTestService.currentCryptoBalance != 0) {
-            double cryptoDepense = 0.;
+            double spentCrypto = 0.;
             if (unit.equals("%")) {
-                cryptoDepense = (amount / 100.) * RunTestService.currentCryptoBalance;
+                spentCrypto = (amount / 100.) * RunTestService.currentCryptoBalance;
             } else if (unit.equals("$")) {
-                cryptoDepense = Math.min(amount, RunTestService.currentCryptoBalance);
+                spentCrypto = Math.min(amount, RunTestService.currentCryptoBalance);
             } else {
                 System.out.println("Houston we've got a problem");
             }
-            RunTestService.currentCryptoBalance -= cryptoDepense;
-            Map<String, String> map = (Map<String, String>) RunTestService.currentEntry.getValue();
+            RunTestService.currentCryptoBalance -= spentCrypto;
+            Map<String, String> map = RunTestService.currentEntry.getValue();
             double cryptoRate = Double.parseDouble(map.get("close"));
-            RunTestService.currentDeviseBalance += cryptoDepense * cryptoRate;
-            RunTestService.addTransaction("sell", cryptoDepense, cryptoDepense * cryptoRate, cryptoRate);
-
+            RunTestService.currentDeviseBalance += spentCrypto * cryptoRate;
+            RunTestService.addTransaction("sell", spentCrypto, spentCrypto * cryptoRate, cryptoRate);
         }
     }
+
 }

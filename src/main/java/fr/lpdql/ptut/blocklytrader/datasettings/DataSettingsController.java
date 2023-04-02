@@ -14,7 +14,6 @@ import java.util.Map;
 public class DataSettingsController {
 
     private final Logger logger = LoggerFactory.getLogger(DataSettingsController.class);
-
     private final DataSettingsService dataSettingsService;
 
     @Autowired
@@ -35,4 +34,5 @@ public class DataSettingsController {
         }
         return json;
     }
+
 }

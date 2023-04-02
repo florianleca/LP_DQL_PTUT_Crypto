@@ -5,6 +5,7 @@ import com.jayway.jsonpath.JsonPath;
 import java.util.Map;
 
 public class LogicCompareBlock extends Block {
+
     private final String operation;
     private final double memberA;
     private final double memberB;
@@ -53,4 +54,5 @@ public class LogicCompareBlock extends Block {
     public boolean getResult() {
         return result;
     }
+
 }

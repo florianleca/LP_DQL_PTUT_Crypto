@@ -14,13 +14,10 @@ public class DataSettingsService {
 
     @Value("${DB_url}")
     private String url;
-
     @Value("${DB_user}")
     private String utilisateur;
-
     @Value("${DB_password}")
     private String motDePasse;
-
     private SortedMap<String, Map<String, String>> currentUserDataSet;
 
     public Map<String, Map<String, String>> getJsonFromDataBase(String crypto, String devise, String frequency,
@@ -63,6 +60,7 @@ public class DataSettingsService {
     public SortedMap<String, Map<String, String>> getCurrentUserDataSet() {
         return currentUserDataSet;
     }
+
 }
 
 

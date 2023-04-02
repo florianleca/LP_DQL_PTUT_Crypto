@@ -1,8 +1,8 @@
 package fr.lpdql.ptut.blocklytrader.deserialisation;
 
-import java.util.Map;
-
 import com.jayway.jsonpath.JsonPath;
+
+import java.util.Map;
 
 public class LogicOperationBlock extends Block {
 
@@ -38,4 +38,5 @@ public class LogicOperationBlock extends Block {
     public boolean getResult() {
         return result;
     }
+
 }

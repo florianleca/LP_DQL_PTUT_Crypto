@@ -5,6 +5,7 @@ import com.jayway.jsonpath.JsonPath;
 import java.util.Map;
 
 public class ControlsIfBlock extends Block {
+
     private final Map<String, String> conditionBlock;
     private final Map<String, String> bodyBlock;
 
@@ -46,4 +47,5 @@ public class ControlsIfBlock extends Block {
             default -> System.out.println("Bloc de type ACTION non reconnu");
         }
     }
+
 }

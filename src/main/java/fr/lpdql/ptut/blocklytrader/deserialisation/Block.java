@@ -25,10 +25,9 @@ public abstract class Block {
     private double valueFromKlinesVariable(Map<String, String> block) {
         JSONObject blockBis = new JSONObject(block);
         String variable = JsonPath.read(blockBis, "$.fields.DATA_TYPE");
-        Map<String, String> map = (Map<String, String>) RunTestService.currentEntry.getValue();
+        Map<String, String> map = RunTestService.currentEntry.getValue();
         return Double.parseDouble(map.get(variable));
     }
-
 
     protected boolean parseBooleanMember(String memberLetter) {
         Map<String, String> memberBlock = JsonPath.read(blockJson, "$.inputs." + memberLetter + ".block");
@@ -62,4 +61,5 @@ public abstract class Block {
         }
         return value;
     }
+
 }

@@ -17,9 +17,12 @@ import java.util.Map;
 public class RunTestController {
 
     private final Logger logger = LoggerFactory.getLogger(DataSettingsController.class);
+    private final RunTestService runTestService;
 
     @Autowired
-    private RunTestService runTestService;
+    public RunTestController(RunTestService runTestService) {
+        this.runTestService = runTestService;
+    }
 
     @GetMapping("/runtest/")
     public Map<Object, Object> runTest(@RequestParam String blocklyJson, @RequestParam String cryptoBalance,
@@ -27,4 +30,5 @@ public class RunTestController {
         logger.info("Bouton Run Test --> " + cryptoBalance + " / " + deviseBalance + " / " + exchangeFees);
         return runTestService.getTestResult(blocklyJson, cryptoBalance, deviseBalance, exchangeFees);
     }
+
 }

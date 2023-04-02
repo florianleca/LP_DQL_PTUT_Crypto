@@ -21,16 +21,12 @@ public class UpdaterMaster {
     private final Logger logger = LoggerFactory.getLogger(UpdaterMaster.class);
     @Value("${DB_url}")
     private String url;
-
     @Value("${DB_user}")
     private String utilisateur;
-
     @Value("${DB_password}")
     private String motDePasse;
-
     @Value("#{'${DB_list_of_tables}'.split(',')}")
     private List<String> tablesNames;
-
     private List<DataBaseUpdater> updaters;
 
     public void initializeUpdaters() throws SQLException {
@@ -43,8 +39,8 @@ public class UpdaterMaster {
                 String currency = matcher.group(2);
                 String interval = matcher.group(3);
                 String symbol = crypto.toUpperCase() + currency.toUpperCase();
-
-                DataBaseUpdater updater = new DataBaseUpdater(symbol, interval, new MySQLConnector(url, tableName, utilisateur, motDePasse));
+                DataBaseUpdater updater = new DataBaseUpdater(symbol, interval, new MySQLConnector(url, tableName,
+                        utilisateur, motDePasse));
                 localUpdaters.add(updater);
             }
         }
@@ -68,4 +64,5 @@ public class UpdaterMaster {
         }
         logger.info("Update terminé");
     }
+
 }

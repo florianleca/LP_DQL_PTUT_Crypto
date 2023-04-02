@@ -18,14 +18,14 @@ public class RunTestService {
     public static Map.Entry<String, Map<String, String>> currentEntry;
     public static double currentCryptoBalance;
     public static double currentDeviseBalance;
-
     public static String firstOpen;
-
     public static String lastClose;
+    private final DataSettingsService dataSettingsService;
 
     @Autowired
-    private DataSettingsService dataSettingsService;
-
+    public RunTestService(DataSettingsService dataSettingsService) {
+        this.dataSettingsService = dataSettingsService;
+    }
 
     public static void addTransaction(String type, double cryptoAmount, double currencyAmount, double rate) {
         Map<String, String> map = new HashMap<>();
@@ -43,7 +43,6 @@ public class RunTestService {
         currentCryptoBalance = Double.parseDouble(cryptoBalance);
         currentDeviseBalance = Double.parseDouble(deviseBalance);
         SortedMap<String, Map<String, String>> klinesJson = dataSettingsService.getCurrentUserDataSet();
-
         boolean first = true;
         for (Map.Entry<String, Map<String, String>> entry : klinesJson.entrySet()) {
             Map<String, String> map = entry.getValue();
@@ -56,12 +55,10 @@ public class RunTestService {
             BlocklyJsonParser blocklyJsonParser = new BlocklyJsonParser(blocklyJson);
             blocklyJsonParser.processEachBlock();
         }
-
         return miseEnFormeResult(cryptoBalance, deviseBalance);
     }
 
     public Map<Object, Object> miseEnFormeResult(String cryptoBalance, String deviseBalance) {
-
         Map<String, String> balances = createBalanceJson(cryptoBalance, deviseBalance);
         Map<Object, Object> result = new HashMap<>();
         result.put("balances", balances);
@@ -85,4 +82,5 @@ public class RunTestService {
         balances.put("result", String.valueOf(newValue - previousValue));
         return balances;
     }
+
 }
