@@ -18,7 +18,7 @@ public class MySQLConnector implements DataBaseConnector {
     public long getLastTimestamp() throws SQLException {
         ResultSet resultSet;
         resultSet = statement.executeQuery(String.format("SELECT MAX(open_time) FROM %s", tableName));
-        resultSet.next();//TODO gérer si ca coince
+        resultSet.next();//TODO gérer si ça coince
         return resultSet.getLong(1);
     }
 

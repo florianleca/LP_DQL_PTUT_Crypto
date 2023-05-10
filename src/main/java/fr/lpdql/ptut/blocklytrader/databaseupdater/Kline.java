@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import java.util.Locale;
 
 public class Kline {
+
     private final long openTime;
     private final double open;
     private final double high;
@@ -17,7 +18,6 @@ public class Kline {
     private final double takerBuyBaseAssetVolume;
     private final double takerBuyQuoteAssetVolume;
     private final int ignore;
-
 
     public Kline(JSONArray kline) {
         this.openTime = kline.getLong(0);
@@ -34,9 +34,14 @@ public class Kline {
         this.ignore = kline.getInt(11);
     }
 
-
     public String getInsertSql(String tableName) {
-        return String.format(new Locale("US"), "INSERT INTO %s " + "(open_time, `open`, high, low, `close`, volume, close_time, " + "quote_asset_volume, number_of_trades, taker_buy_base_asset_volume, " + "taker_buy_quote_asset_volume, `ignore`) " + "VALUES (%d, %f, %f, %f, %f, %f, %d, %f, %d, %f, %f, %d);", tableName, this.openTime, this.open, this.high, this.low, this.close, this.volume, this.closeTime, this.quoteAssetVolume, this.numberOfTrades, this.takerBuyBaseAssetVolume, this.takerBuyQuoteAssetVolume, this.ignore);
+        return String.format(new Locale("US"),
+                "INSERT INTO %s " + "(open_time, `open`, high, low, `close`, volume, " + "close_time, " +
+                        "quote_asset_volume, number_of_trades, taker_buy_base_asset_volume, " +
+                        "taker_buy_quote_asset_volume, `ignore`) " + "VALUES (%d, %f, %f, %f, %f, %f, %d, %f, %d, %f," +
+                        " %f, %d)" + ";", tableName, this.openTime, this.open, this.high, this.low, this.close,
+                this.volume, this.closeTime, this.quoteAssetVolume, this.numberOfTrades, this.takerBuyBaseAssetVolume
+                , this.takerBuyQuoteAssetVolume, this.ignore);
     }
 
 }
