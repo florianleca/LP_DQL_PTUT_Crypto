@@ -19,6 +19,34 @@ public class Kline {
     private final double takerBuyQuoteAssetVolume;
     private final int ignore;
 
+    public Kline(
+            long openTime,
+            double open,
+            double high,
+            double low,
+            double close,
+            double volume,
+            long closeTime,
+            double quoteAssetVolume,
+            int numberOfTrades,
+            double takerBuyBaseAssetVolume,
+            double takerBuyQuoteAssetVolume,
+            int ignore
+    ){
+        this.openTime = openTime;
+        this.open = open;
+        this.high = high;
+        this.low = low;
+        this.close = close;
+        this.volume = volume;
+        this.closeTime = closeTime;
+        this.quoteAssetVolume = quoteAssetVolume;
+        this.numberOfTrades = numberOfTrades;
+        this.takerBuyBaseAssetVolume = takerBuyBaseAssetVolume;
+        this.takerBuyQuoteAssetVolume = takerBuyQuoteAssetVolume;
+        this.ignore = ignore;
+    }
+
     public Kline(JSONArray kline) {
         this.openTime = kline.getLong(0);
         this.open = kline.getDouble(1);

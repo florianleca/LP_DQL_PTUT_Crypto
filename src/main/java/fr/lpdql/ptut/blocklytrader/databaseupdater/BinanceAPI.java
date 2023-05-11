@@ -1,0 +1,26 @@
+package fr.lpdql.ptut.blocklytrader.databaseupdater;
+
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import org.json.JSONArray;
+
+import java.io.IOException;
+
+public class BinanceAPI implements ExchangeAPI {
+    private String apiUrl = "https://api.binance.com/api/v3/klines?symbol=%s&interval=%s&startTime=%d";
+    private OkHttpClient httpClient;
+
+    public void BinanceAPI(String symbol, String interval){
+        apiUrl = String.format(apiUrl, symbol, interval);
+        // Initialisation du client HTTP
+        httpClient = new OkHttpClient();
+
+    }
+    public JSONArray getJSONKlinesFromStartTime(long startTime) throws IOException {
+        // Récupération des nouvelles klines à partir de l'API Binance
+        Request request = new Request.Builder().url(String.format(apiUrl, startTime)).build();
+        Response response = httpClient.newCall(request).execute();
+        return new JSONArray(response.body().string());
+    }
+}
