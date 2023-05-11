@@ -254,6 +254,8 @@ function traiterJson(json) {
     let balances_json = json['balances'];
     remplirTransactions(transactions_json);
     remplirResult(balances_json);
+    // Modif Sam
+    ajoutAnnotations(transactions_json);
 }
 
 function remplirTransactions(json) {

@@ -1,3 +1,6 @@
+// Déclaration du graphique
+var chart;
+
 // Traite les données récupérées du Json pour générer les "bougies" et les confier à la fonction "displayGraphique"
 function genererBougies(json, symbole, devise) {
     let index = 0;
@@ -38,10 +41,16 @@ function displayGraphique(datesGraphe, donneesOpen, donneesHigh, donneesLow, don
         donneesGraph.push(itemToPush);
         index++;
     }
+
+    // Options du graphique
     let options = {
-        series: [{
+        series: [
+          {
+            name: 'Bougies',
+            type: 'candlestick',
             data: donneesGraph
-        }],
+          }
+        ],
         chart: {
             type: 'candlestick',
             height: 350
@@ -51,14 +60,47 @@ function displayGraphique(datesGraphe, donneesOpen, donneesHigh, donneesLow, don
             align: 'left'
         },
         xaxis: {
-            type: 'datetime'
-        },
+            type: 'datetime',
+            labels: {
+              formatter: function(value, timestamp) {
+                return dayjs(timestamp).format('DD/MM/YYYY HH:mm');
+              }
+            },
+          },
         yaxis: {
             tooltip: {
                 enabled: true
             }
         }
     };
-    let chart = new ApexCharts(document.querySelector("#bloc_tradingview"), options);
+    chart = new ApexCharts(document.querySelector("#bloc_tradingview"), options);
     chart.render();
 }
+
+function ajoutAnnotations(jsonTransactions) {
+  let annotations = {
+    xaxis: []
+  };
+  var currentOptions = chart.opts;
+  for(let key of Object.keys(jsonTransactions)) {
+    let backColor = jsonTransactions[key].type === 'buy' ? '#FF0000' : '#00FF00';
+    let texte = jsonTransactions[key].currency_amount;
+    annotations.xaxis.push({
+          x: key,
+          borderColor: backColor,
+          borderWidth: 2,
+          label: {
+          borderColor: backColor,
+          style: {
+              color: '#fff',
+              background: backColor
+          },
+          text: texte
+        }
+    })     
+  }
+  let newOptions = Object.assign({},currentOptions);
+    newOptions.annotations.xaxis = newOptions.annotations.xaxis.concat(annotations.xaxis)
+    chart.updateOptions(newOptions);
+}
+
