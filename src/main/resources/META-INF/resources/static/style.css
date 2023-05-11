@@ -245,3 +245,21 @@ thead {
     flex-direction: column;
     justify-content: center;
 }
+
+
+.infobulle {
+    background: none;
+}
+
+.infobulle:hover {
+    font-style: italic;
+    /* font-size: 14px; */
+    font:bolder;
+    z-index: 1;
+    color: #71eae6;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+

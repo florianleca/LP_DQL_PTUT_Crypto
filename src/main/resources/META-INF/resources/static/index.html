@@ -27,7 +27,6 @@
 <header>
     <img src="logo.svg" alt="Blockly Trader Logo" id="logo"/>
 </header>
-
 <div id="main_container">
     <div id="bloc_data_settings" class="settings_bloc">
         <span>DATA SETTINGS</span>
@@ -79,13 +78,14 @@
         <table id="klines_table">
             <thead>
             <tr>
-                <th>Open Time</th>
-                <th>Open</th>
-                <th>Close</th>
-                <th>Low</th>
-                <th>High</th>
-                <th>Volume</th>
-                <th>Trades</th>
+                <th><span class="infobulle" title="Heure ou date d'ouverture d'une période de trading ou d'une session de marché pour la crypto-monnaie.">Open Time</span> </th>  
+                <th><span class="infobulle"  title="Prix de la première transaction effectuée sur la crypto-monnaie pour une période donnée.">Open</span> </th>
+                <th><span class="infobulle" title="Prix de la dernière transaction effectuée sur la crypto-monnaie pour une période donnée.">Close</span> </th>
+                <th><span class="infobulle" title="Prix le plus bas atteint par la crypto-monnaie pendant une période donnée.">Low</span> </th>
+                <th><span class="infobulle" title="Prix le plus élevé atteint par la crypto-monnaie pendant une période donnée.">High</span> </th>
+                <th><span class="infobulle" title="Quantité totale d'une monnaie numérique échangée au cours d'une période donnée.">
+                    Volume</span> </th>
+                <th><span class="infobulle" title="Nombre total de transactions effectuées pour une paire d'actifs (par exemple BTC/USDT) sur un certain intervalle de temps donné.">Trades</span> </th>
             </tr>
             </thead>
             <tbody id="klines_body"></tbody>
