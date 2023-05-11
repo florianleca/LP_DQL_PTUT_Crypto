@@ -40,6 +40,24 @@ Blockly.Blocks["sell"] = {
     },
 };
 
+//Définition du bloc personnalisé "moyenne_mobile"
+Blockly.Blocks['moyenne_mobile'] = {
+    init: function() {
+      this.appendValueInput("mb_jours")
+          .setCheck("Number")
+          .appendField("Moyenne mobile sur ");
+      this.appendDummyInput()
+          .appendField("jours");
+      this.setInputsInline(true);
+      this.setOutput(true, null);
+      this.setColour(230);
+   this.setTooltip("");
+   this.setHelpUrl("");
+    }
+  };
+
+
+
 // Définition du bloc personnalisé "klines_variables"
 Blockly.Blocks["klines_variables"] = {
     init: function () {
@@ -87,6 +105,10 @@ let toolbox = {
             fields: {
                 NUM: 123,
             },
+        }, 
+        {
+            kind: "block",
+            type: "moyenne_mobile",
         },
         {
             kind: "block",
