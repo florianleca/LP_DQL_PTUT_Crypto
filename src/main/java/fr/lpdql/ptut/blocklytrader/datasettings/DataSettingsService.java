@@ -1,5 +1,8 @@
 package fr.lpdql.ptut.blocklytrader.datasettings;
 
+import fr.lpdql.ptut.blocklytrader.klines.CollectionSelector;
+import fr.lpdql.ptut.blocklytrader.klines.KlineDocument;
+import fr.lpdql.ptut.blocklytrader.klines.KlineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +12,12 @@ import java.util.*;
 public class DataSettingsService {
 
     @Autowired
+    private CollectionSelector collectionSelector;
+
+    @Autowired
     private KlineRepository klineRepository;
     private SortedMap<String, Map<String, String>> currentUserDataSet;
 
-    public String currentCollection;
 
     public Map<String, Map<String, String>> getJsonFromDataBase(String crypto, String devise, String frequency,
                                                                 String startTime, String endTime) {
@@ -25,7 +30,7 @@ public class DataSettingsService {
     }
 
     public List<KlineDocument> executeDataBaseQuery(String nomDeLaCollection, String startTime, String endTime) {
-        currentCollection = nomDeLaCollection;
+        collectionSelector.setCurrentCollection(nomDeLaCollection);
         return klineRepository.findKlinesBetweenDates(Float.parseFloat(startTime), Float.parseFloat(endTime));
     }
 
