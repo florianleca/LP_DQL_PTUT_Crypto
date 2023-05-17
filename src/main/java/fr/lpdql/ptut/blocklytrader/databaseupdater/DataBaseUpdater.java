@@ -7,24 +7,31 @@ public class DataBaseUpdater {
 
     private final DataBaseConnector dataBaseConnector;
     private final ExchangeAPI exchangeAPI;
+    private final Class<Kline> usedKlineClasse;
 
     public DataBaseUpdater(
-            String symbol,
-            String interval,
+            ExchangeAPI exchangeAPI,
+            DataBaseConnector dataBaseConnector,
+            Class<Kline> usedKlineClass //nécessaire aux tests unitaires
+    ) {
+        this.exchangeAPI = exchangeAPI;
+        this.dataBaseConnector = dataBaseConnector;
+        this.usedKlineClasse = usedKlineClass;
+    }
+    public DataBaseUpdater(
             ExchangeAPI exchangeAPI,
             DataBaseConnector dataBaseConnector
     ) {
-        this.symbol = symbol;
-        this.interval = interval;
         this.exchangeAPI = exchangeAPI;
         this.dataBaseConnector = dataBaseConnector;
+        this.usedKlineClasse = Kline.class;
     }
 
     long getEndTime(){
         long now = System.currentTimeMillis();
         return now - (10 * 60 * 60 * 1000); // 10 hours ago
     }
-    public void updateKlines() {
+    public void updateKlines() throws DataBaseUpdaterException {
         long endTime = getEndTime();
         long lastTimestamp = dataBaseConnector.getLastTimestamp();
         long startTime = lastTimestamp + 1;
@@ -41,5 +48,8 @@ public class DataBaseUpdater {
         }
     }
 
+    public String getTableName() {
+        return dataBaseConnector.getTableName();
+    }
 }
 

@@ -7,8 +7,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -29,7 +27,7 @@ public class UpdaterMaster {
     private List<String> tablesNames;
     private List<DataBaseUpdater> updaters;
 
-    public void initializeUpdaters() throws SQLException {
+    public void initializeUpdaters() {
         List<DataBaseUpdater> localUpdaters = new ArrayList<>();
         for (String tableName : tablesNames) {
             Pattern pattern = Pattern.compile("([^_]+)_([^_]+)_(.+)");
@@ -39,9 +37,28 @@ public class UpdaterMaster {
                 String currency = matcher.group(2);
                 String interval = matcher.group(3);
                 String symbol = crypto.toUpperCase() + currency.toUpperCase();
-                DataBaseUpdater updater = new DataBaseUpdater(symbol, interval, new MySQLConnector(url, tableName,
-                        utilisateur, motDePasse));
-                localUpdaters.add(updater);
+                try {
+                    DataBaseUpdater updater = new DataBaseUpdater(
+                            new BinanceAPI(
+                                    logger,
+                                    symbol,
+                                    interval
+                            ),
+                            new MySQLConnector(
+                                    logger,
+                                    url,
+                                    tableName,
+                                    utilisateur,
+                                    motDePasse
+                            )
+                    );
+                    localUpdaters.add(updater);
+                }catch(DataBaseUpdaterException exc){
+                    logger.warn(
+                        "Erreur lors de l'initialiation de l'updater de la table "+tablesNames+".\n"+
+                        "Cette table ne recevra de mise à jours."
+                    );
+                }
             }
         }
         this.updaters = localUpdaters;
@@ -49,7 +66,7 @@ public class UpdaterMaster {
 
     // Toutes les tables sont mises à jour toutes les heures
     @Scheduled(fixedRate = 3600 * 1000)
-    public void updateAll() throws SQLException {
+    public void updateAll() {
         logger.info("Database update en cours");
         if (updaters == null) {
             initializeUpdaters();
@@ -57,9 +74,11 @@ public class UpdaterMaster {
         for (DataBaseUpdater updater : updaters) {
             try {
                 updater.updateKlines();
-            } catch (SQLException | IOException e) {
-                //TODO
-                logger.warn("Exception à traiter : " + e);
+            } catch (DataBaseUpdaterException exc) {
+                logger.warn(
+                        "Erreur lors de la mise à jour de la table "+updater.getTableName()+".\n"
+                        +"Cette table n'a pas été mise à jour."
+                );
             }
         }
         logger.info("Update terminé");

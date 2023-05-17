@@ -1,12 +1,13 @@
 package fr.lpdql.ptut.blocklytrader.databaseupdater;
 
-import java.sql.SQLException;
 
 interface DataBaseConnector {
 
-    //TODO  gérer les exceptions
-    long getLastTimestamp() throws SQLException;
+    String getTableName();
 
-    void addKlineToDB(Kline kline) throws SQLException;
+    //TODO  gérer les exceptions
+    long getLastTimestamp() throws DataBaseUpdaterException;
+
+    void addKlineToDB(Kline kline) throws DataBaseUpdaterException;
 
 }
