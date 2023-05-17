@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 @CrossOrigin
@@ -26,13 +24,7 @@ public class DataSettingsController {
                                                        @RequestParam String frequency, @RequestParam String startTime
             , @RequestParam String endTime) {
         logger.info("Bouton Submit (data) --> " + crypto + " / " + devise + " / " + frequency);
-        Map<String, Map<String, String>> json = new HashMap<>();
-        try {
-            json = dataSettingsService.getJsonFromDataBase(crypto, devise, frequency, startTime, endTime);
-        } catch (SQLException e) {
-            logger.warn("Exception à traiter : " + e);
-        }
-        return json;
+        return dataSettingsService.getJsonFromDataBase(crypto, devise, frequency, startTime, endTime);
     }
 
 }
