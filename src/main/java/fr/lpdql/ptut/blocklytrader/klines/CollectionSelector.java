@@ -7,12 +7,12 @@ public class CollectionSelector {
 
     private String currentCollection = "";
 
-    public void setCurrentCollection(String collection) {
-        currentCollection = collection;
-    }
-
     public String getCurrentCollection() {
         return currentCollection;
+    }
+
+    public void setCurrentCollection(String collection) {
+        currentCollection = collection;
     }
 
 }

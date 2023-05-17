@@ -21,13 +21,10 @@ import java.util.regex.Pattern;
 public class UpdaterMaster {
 
     private final Logger logger = LoggerFactory.getLogger(UpdaterMaster.class);
-
     @Autowired
     CollectionSelector collectionSelector;
-
     @Autowired
     KlineRepository klineRepository;
-
     @Value("#{'${DB_list_of_tables}'.split(',')}")
     private List<String> collectionNames;
     private List<DataBaseUpdater> updaters;
@@ -42,7 +39,8 @@ public class UpdaterMaster {
                 String currency = matcher.group(2);
                 String interval = matcher.group(3);
                 String symbol = crypto.toUpperCase() + currency.toUpperCase();
-                DataBaseUpdater updater = new DataBaseUpdater(symbol, interval, collectionName, klineRepository, collectionSelector);
+                DataBaseUpdater updater = new DataBaseUpdater(symbol, interval, collectionName, klineRepository,
+                        collectionSelector);
                 localUpdaters.add(updater);
             }
         }

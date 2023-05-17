@@ -13,11 +13,9 @@ public class DataSettingsService {
 
     @Autowired
     private CollectionSelector collectionSelector;
-
     @Autowired
     private KlineRepository klineRepository;
     private SortedMap<String, Map<String, String>> currentUserDataSet;
-
 
     public Map<String, Map<String, String>> getJsonFromDataBase(String crypto, String devise, String frequency,
                                                                 String startTime, String endTime) {
@@ -31,7 +29,7 @@ public class DataSettingsService {
 
     public List<KlineDocument> executeDataBaseQuery(String nomDeLaCollection, String startTime, String endTime) {
         collectionSelector.setCurrentCollection(nomDeLaCollection);
-        return klineRepository.findKlinesBetweenDates(Float.parseFloat(startTime), Float.parseFloat(endTime));
+        return klineRepository.findKlinesBetweenDates(startTime, endTime);
     }
 
     public Map<String, String> extractDataFromSingleLine(KlineDocument document) {

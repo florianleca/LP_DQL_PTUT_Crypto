@@ -9,39 +9,28 @@ public class KlineDocument {
 
     @Field("open_time")
     private String openTime;
-
     @Field("open")
     private String open;
-
     @Field("high")
     private String high;
-
     @Field("low")
     private String low;
-
     @Field("close")
     private String close;
-
     @Field("volume")
     private String volume;
-
     @Field("close_time")
     private String closeTime;
-
     @Field("quote_asset_volume")
     private String quoteAssetVolume;
-
     @Field("number_of_trades")
     private String numberOfTrades;
-
     @Field("taker_buy_base_asset_volume")
     private String takerBuyBase;
-
     @Field("taker_buy_quote_asset_volume")
     private String takerBuyQuote;
 
     public KlineDocument() {
-
     }
 
     public KlineDocument(JSONArray kline) {

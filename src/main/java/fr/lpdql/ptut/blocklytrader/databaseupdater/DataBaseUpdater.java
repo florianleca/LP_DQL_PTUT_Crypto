@@ -13,16 +13,17 @@ import java.io.IOException;
 
 public class DataBaseUpdater {
 
-    public static final String BINANCE_API_URL = "https://api.binance.com/api/v3/klines?symbol=%s&interval=%s&startTime=%d";
+    public static final String BINANCE_API_URL = "https://api.binance.com/api/v3/klines?symbol=%s&interval=%s" +
+            "&startTime=%d";
     private final String symbol;
     private final String interval;
     private final OkHttpClient httpClient;
     private final String collectionName;
     private final KlineRepository klineRepository;
-
     private final CollectionSelector collectionSelector;
 
-    public DataBaseUpdater(String symbol, String interval, String collectionName, KlineRepository klineRepository, CollectionSelector collectionSelector) {
+    public DataBaseUpdater(String symbol, String interval, String collectionName, KlineRepository klineRepository,
+                           CollectionSelector collectionSelector) {
         this.klineRepository = klineRepository;
         this.collectionSelector = collectionSelector;
         this.symbol = symbol;
@@ -33,7 +34,6 @@ public class DataBaseUpdater {
 
     public void updateKlines() throws JSONException, IOException {
         // Boucle pour récupérer les nouvelles klines jusqu'à moins de 10 heures avant l'heure actuelle
-        //DataSettingsService.setCurrentCollection(collectionName);
         long now = System.currentTimeMillis();
         long endTime = now - (10 * 60 * 60 * 1000); // 10 hours ago
         long lastTimestamp;
@@ -47,25 +47,21 @@ public class DataBaseUpdater {
     }
 
     private JSONArray getKlinesFromBinance(long startTime) throws IOException {
-        Request request = new Request.Builder().url(String.format(BINANCE_API_URL, symbol, interval, startTime)).build();
+        Request request = new Request.Builder().url(String.format(BINANCE_API_URL, symbol, interval, startTime))
+                .build();
         Response response = httpClient.newCall(request).execute();
         return new JSONArray(response.body().string());
     }
 
     public long getLastTimestamp(String collectionName) {
         collectionSelector.setCurrentCollection(collectionName);
-        //KlineDocument kline = klineRepository.findNewestKline().get(0);
-        //KlineDocument kline = klineRepository.findNewestKline();
         KlineDocument kline = klineRepository.findFirstByOrderByOpenTimeDesc();
-
-        System.out.println(kline);
         return Long.parseLong(kline.getOpenTime());
     }
 
     public void addKlinesToTB(JSONArray klinesArray) {
         for (int i = 0; i < klinesArray.length(); i++) {
             KlineDocument kline = new KlineDocument(klinesArray.getJSONArray(i));
-            //System.out.println("Insertion dans " + collectionSelector.getCurrentCollection() + " du kline : " + kline);
             klineRepository.insert(kline);
         }
     }
