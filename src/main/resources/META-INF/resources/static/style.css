@@ -42,7 +42,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    line-height: 2;
+    line-height: normal;
     justify-content: start;
     border: 2px solid;
     border-radius: 10px;
@@ -56,6 +56,7 @@
     font-size: 16px;
     border: 2px solid;
     border-radius: 10px;
+    line-height: 2;
 }
 
 .settings_bloc div {
@@ -79,8 +80,8 @@ input {
 
 select:focus,
 input:focus {
-    outline: none; /* désactive la bordure par défaut */
-    box-shadow: 0 0 2px 2px var(--couleur3); /* définit une ombre colorée */
+    outline: none; 
+    box-shadow: 0 0 2px 2px var(--couleur3); 
 }
 
 ::-webkit-calendar-picker-indicator {
@@ -158,9 +159,9 @@ th {
     background-color: #332f2e;
 }
 
-/* BLOCS PAS ENCORE TRAITÉS */
+/* BLOCS TRADING VIEW */
 
-.to_do_bloc {
+.Trading_view_bloc {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -210,6 +211,8 @@ thead {
     text-align: center;
 }
 
+/*BLOC TRANSACTION*/
+
 #bloc_transactions {
     border: 2px solid var(--couleur1a);
     border-radius: 10px;
@@ -231,6 +234,7 @@ thead {
 #transactions_table td {
     padding: 5px;
 }
+/*BLOC RESULT*/
 
 #bloc_result {
     border: 2px solid var(--couleur1a);
@@ -246,6 +250,7 @@ thead {
     justify-content: center;
 }
 
+/*INOFBULLES*/
 
 .infobulle {
     background: none;
@@ -261,5 +266,6 @@ thead {
     padding-right: 10%;
     padding-top: 3%;
     padding-bottom: 3%;
+    cursor: default;
 }
 
