@@ -1,5 +1,8 @@
 let workspace = null;
 
+// Modif Sam
+var jsonTransactionsATransferer;
+
 // Définition du bloc personnalisé "buy"
 Blockly.Blocks["buy"] = {
     init: function () {
@@ -213,7 +216,7 @@ function injectBlockly() {
 $(document).ready(function () {
     $("#run_test_button").click(function () {
         const test = Blockly.serialization.workspaces.save(workspace);
-        console.log(JSON.stringify(test)); // Garder cette ligne qui peut être pratique pour debug
+        console.log("hello",JSON.stringify(test)); // Garder cette ligne qui peut être pratique pour debug
         clearElements("test_klines_body")
         valideTest();
     });
@@ -254,8 +257,12 @@ function traiterJson(json) {
     let balances_json = json['balances'];
     remplirTransactions(transactions_json);
     remplirResult(balances_json);
+
     // Modif Sam
     ajoutAnnotations(transactions_json);
+    jsonTransactionsATransferer = transactions_json;
+    localStorage.setItem("clé", jsonTransactionsATransferer);
+    window.location.href = "tradingview.js";
 }
 
 function remplirTransactions(json) {

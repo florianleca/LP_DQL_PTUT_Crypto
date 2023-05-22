@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="grids.css"/>
     <link rel="stylesheet" href="style.css"/>
+<!-- Modifs Sam du 16/05/23 pour agrandir le graphique ou l'ouvrir dans une autre page web -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
+<!-- Fin des modifs du 16/05/23 -->
     <title>Blockly Trader</title>
 
     <script
@@ -16,6 +19,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/dayjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<!-- Modifs Sam du 16/05/23 pour agrandir le graphique ou l'ouvrir dans une autre page web -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Fin des modifs du 16/05/23 -->
     <script src="https://unpkg.com/blockly/blockly.min.js"></script>
     <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
     <script type="application/javascript" src="app.js"></script>
@@ -72,8 +78,34 @@
         <div id="blocklyDiv"></div>
     </div>
 
-    <div id="bloc_tradingview" class="to_do_bloc">
+    <div id="bloc_tradingview" class="to_do_bloc"></div>
+
+    <!-- Modifs Sam du 17/05/23 pour agrandir le graphique ou l'ouvrir dans une modale -->
+    <!-- <button id="btnOuvrirGraphique" data-bs-toggle="modal" data-bs-target="#graphiqueModal">Ouvrir le graphique</button> -->
+    <button id="btnOuvrirGraphique" data-bs-toggle="modal" data-bs-target="#graphiqueModal" onclick=onClickModal()>Ouvrir le graphique</button>
+    <!-- Fin des modifs du 17/05/23 -->
+
+    <!-- Modifs Sam du 17/05/23 pour agrandir le graphique ou l'ouvrir dans une odale -->
+    <!-- Modale pour afficher le graphique -->
+    <div class="modal fade" id="graphiqueModal" tabindex="-1" aria-labelledby="graphiqueModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="graphiqueModalLabel">Graphique</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Code HTML for displaying the graph -->
+                    test
+                    <div id="bloc_tradingview2" class="to_do_bloc"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
     </div>
+ <!-- Fin des modifs du 17/05/23 --> 
 
     <div id="bloc_klines">
         <table id="klines_table">
@@ -109,6 +141,7 @@
     </div>
 
 </div>
+
 </body>
 </html>
 

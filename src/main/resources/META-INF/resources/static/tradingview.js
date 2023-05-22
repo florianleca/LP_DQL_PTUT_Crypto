@@ -1,5 +1,9 @@
-// Déclaration du graphique
+// Déclaration du graphique et autres éléments
 var chart;
+var chartModale;
+var jsonTransactionsTransfere = localStorage.getItem("clé");
+console.log(jsonTransactionsTransfere);
+//var c2;
 
 // Traite les données récupérées du Json pour générer les "bougies" et les confier à la fonction "displayGraphique"
 function genererBougies(json, symbole, devise) {
@@ -26,6 +30,7 @@ function genererBougies(json, symbole, devise) {
         donneesBougiesGeneral.push(donneesBougies);
         index++;
     }
+     
     displayGraphique(datesGraphe, donneesOpen, donneesHigh, donneesLow, donneesClose, symbole, devise);
 }
 
@@ -33,6 +38,7 @@ function genererBougies(json, symbole, devise) {
 function displayGraphique(datesGraphe, donneesOpen, donneesHigh, donneesLow, donneesClose, symbole, devise) {
     let index = 0;
     let donneesGraph = [];
+  
     for (let date in datesGraphe) {
         let itemToPush = {
             x: new Date(datesGraphe[date]),
@@ -43,7 +49,7 @@ function displayGraphique(datesGraphe, donneesOpen, donneesHigh, donneesLow, don
     }
 
     // Options du graphique
-    let options = {
+    var options = {
         series: [
           {
             name: 'Bougies',
@@ -65,23 +71,28 @@ function displayGraphique(datesGraphe, donneesOpen, donneesHigh, donneesLow, don
               formatter: function(value, timestamp) {
                 return dayjs(timestamp).format('DD/MM/YYYY HH:mm');
               }
-            },
-          },
+            }
+        },
         yaxis: {
             tooltip: {
                 enabled: true
             }
         }
-    };
+      }
     chart = new ApexCharts(document.querySelector("#bloc_tradingview"), options);
+    // Créer une autre version du graphique et l'attribue au bloc de la modale
+    chartModale = new ApexCharts(document.querySelector("#bloc_tradingview2"), options); 
     chart.render();
 }
+
 
 function ajoutAnnotations(jsonTransactions) {
   let annotations = {
     xaxis: []
   };
   var currentOptions = chart.opts;
+  // Supprimer les précédentes annotations pour éviter de surcharger le graphique avec les annotations de tests successifs
+  currentOptions.annotations.xaxis = [];
   for(let key of Object.keys(jsonTransactions)) {
     let backColor = jsonTransactions[key].type === 'buy' ? '#FF0000' : '#00FF00';
     let texte = jsonTransactions[key].currency_amount;
@@ -104,3 +115,14 @@ function ajoutAnnotations(jsonTransactions) {
     chart.updateOptions(newOptions);
 }
 
+
+function onClickModal() {
+  ajoutAnnotations(jsonTransactionsTransfere);
+  chartModale.render();
+  /*console.log("on clique");
+  console.log("les options ", chart.opts);
+  let c2; 
+    c2 = new ApexCharts(document.querySelector("#bloc_tradingview2"), chart.opts);
+    c2.render();*/
+  // document.getElementById(bloc_tradingview2).innerText = document.getElementById(bloc_tradingview);
+}
