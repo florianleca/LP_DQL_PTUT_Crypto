@@ -82,6 +82,7 @@ function ajoutAnnotations(jsonTransactions) {
     xaxis: []
   };
   var currentOptions = chart.opts;
+  currentOptions.annotations.xaxis = []; // Supprimer les précédentes annotations et ne pas surcharger le graphique
   for(let key of Object.keys(jsonTransactions)) {
     let backColor = jsonTransactions[key].type === 'buy' ? '#FF0000' : '#00FF00';
     let texte = jsonTransactions[key].currency_amount;
@@ -103,4 +104,3 @@ function ajoutAnnotations(jsonTransactions) {
     newOptions.annotations.xaxis = newOptions.annotations.xaxis.concat(annotations.xaxis)
     chart.updateOptions(newOptions);
 }
-
