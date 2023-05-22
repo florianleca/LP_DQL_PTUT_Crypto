@@ -102,15 +102,15 @@ function remplirTableauKlines(json) {
             '"><td>' +
             dateformat +
             "</td><td>" +
-            json[key]['open'] +
+            Math.round((json[key]['open'])*100)/100 +
             "</td><td>" +
-            json[key]['close'] +
+            Math.round((json[key]['close'])*100)/100 +
             "</td><td>" +
-            json[key]['low'] +
+            Math.round((json[key]['low'])*100)/100 +
             "</td><td>" +
-            json[key]['high'] +
+            Math.round((json[key]['high'])*100)/100 +
             "</td><td>" +
-            json[key]['volume'] +
+            Math.round((json[key]['volume'])*100)/100 +
             "</td><td>" +
             json[key]['number_of_trades'] +
             "</td></tr>"
