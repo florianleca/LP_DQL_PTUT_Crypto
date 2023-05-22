@@ -258,14 +258,10 @@ thead {
 
 .infobulle:hover {
     font-style: italic;
-    /* font-size: 14px; */
-    font:bolder;
+    font-weight:bolder;
     z-index: 1;
-    color: #71eae6;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 3%;
-    padding-bottom: 3%;
+    color: lightgray;
+    padding: 3% 10%;
     cursor: default;
 }
 

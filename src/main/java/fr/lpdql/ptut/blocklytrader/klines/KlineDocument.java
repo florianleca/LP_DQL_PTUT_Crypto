@@ -30,6 +30,7 @@ public class KlineDocument {
     @Field("taker_buy_quote_asset_volume")
     private String takerBuyQuote;
 
+    // utilisé par Spring, ne pas supprimer
     public KlineDocument() {
     }
 

@@ -7,6 +7,7 @@ public class CollectionSelector {
 
     private String currentCollection = "";
 
+    // utilisé par Spring, ne pas supprimer
     public String getCurrentCollection() {
         return currentCollection;
     }
