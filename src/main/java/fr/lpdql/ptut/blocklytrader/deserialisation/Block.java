@@ -12,8 +12,8 @@ import java.util.Map;
 public abstract class Block {
 
     protected final Logger logger = LoggerFactory.getLogger(DataSettingsController.class);
-    protected Map<String, String> blockMap;
-    protected JSONObject blockJson;
+    protected final Map<String, String> blockMap;
+    protected final JSONObject blockJson;
 
     protected Block(Map<String, String> block) {
         blockMap = block;

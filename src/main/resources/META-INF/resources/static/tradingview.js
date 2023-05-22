@@ -5,13 +5,11 @@ var chart;
 function genererBougies(json, symbole, devise) {
     let index = 0;
     let datesGraphe = [];
-    let donneesBougiesGeneral = [];
     let donneesOpen = [];
     let donneesHigh = [];
     let donneesLow = [];
     let donneesClose = [];
     for (let key of Object.keys(json)) {
-        let donneesBougies = [];
         let date = new Date(parseInt(key));
         let high = json[key].high;
         let low = json[key].low;
@@ -22,8 +20,6 @@ function genererBougies(json, symbole, devise) {
         donneesHigh.push(high);
         donneesLow.push(low);
         donneesClose.push(close);
-        donneesBougies.push(open, high, low, close);
-        donneesBougiesGeneral.push(donneesBougies);
         index++;
     }
     displayGraphique(datesGraphe, donneesOpen, donneesHigh, donneesLow, donneesClose, symbole, devise);
