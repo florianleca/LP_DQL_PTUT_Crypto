@@ -7,7 +7,6 @@ import fr.lpdql.ptut.blocklytrader.klines.CollectionSelector;
 import fr.lpdql.ptut.blocklytrader.klines.KlineDocument;
 import fr.lpdql.ptut.blocklytrader.klines.KlineRepository;
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.IOException;
 
@@ -32,7 +31,7 @@ public class DataBaseUpdater {
         httpClient = new OkHttpClient();
     }
 
-    public void updateKlines() throws JSONException, IOException {
+    public void updateKlines() throws DataBaseUpdaterException {
         // Boucle pour récupérer les nouvelles klines jusqu'à moins de 10 heures avant l'heure actuelle
         long now = System.currentTimeMillis();
         long endTime = now - (10 * 60 * 60 * 1000); // 10 hours ago
@@ -46,11 +45,15 @@ public class DataBaseUpdater {
         }
     }
 
-    private JSONArray getKlinesFromBinance(long startTime) throws IOException {
+    private JSONArray getKlinesFromBinance(long startTime) throws DataBaseUpdaterException {
         Request request = new Request.Builder().url(String.format(BINANCE_API_URL, symbol, interval, startTime))
                 .build();
-        Response response = httpClient.newCall(request).execute();
-        return new JSONArray(response.body().string());
+        try{
+            Response response = httpClient.newCall(request).execute();
+            return new JSONArray(response.body().string());
+        }catch(IOException exc){
+            throw new DataBaseUpdaterException("Erreur lors de la requète http à l'API d'exchange.",exc);
+        }
     }
 
     public long getLastTimestamp(String collectionName) {
@@ -66,5 +69,8 @@ public class DataBaseUpdater {
         }
     }
 
+    public String getCollectionName() {
+        return collectionName;
+    }
 }
 

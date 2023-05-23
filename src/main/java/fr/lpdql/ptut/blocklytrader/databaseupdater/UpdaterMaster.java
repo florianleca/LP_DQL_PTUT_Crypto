@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -57,9 +56,10 @@ public class UpdaterMaster {
         for (DataBaseUpdater updater : updaters) {
             try {
                 updater.updateKlines();
-            } catch (IOException e) {
-                //TODO
-                logger.warn("Exception à traiter : " + e);
+            } catch (DataBaseUpdaterException exc) {
+                logger.warn("Erreur lors de l'update de " + updater.getCollectionName() + ".\n"
+                        + "Attention, la collection ne sera pas à jour.\n"
+                        + exc);
             }
         }
         logger.info("Update terminé");
