@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+import static java.lang.Thread.sleep;
+
 @CrossOrigin
 @RestController
 public class DataSettingsController {
@@ -28,7 +30,7 @@ public class DataSettingsController {
             , @RequestParam String endTime) throws InterruptedException {
         while(collectionSelector.getIsBusy()) {
             logger.info("Waiting for the end of a database update");
-            wait(1000);
+            sleep(1000);
         }
         logger.info("Bouton Submit (data) --> " + crypto + " / " + devise + " / " + frequency);
         return dataSettingsService.getJsonFromDataBase(crypto, devise, frequency, startTime, endTime);
