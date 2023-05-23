@@ -234,6 +234,21 @@ thead {
 #transactions_table td {
     padding: 5px;
 }
+
+/*INOFBULLES*/
+
+.infobulle {
+    background: none;
+}
+
+.infobulle:hover {
+    font-style: italic;
+    font-weight:bolder;
+    z-index: 1;
+    color: lightgray;
+    padding: 3% 10%;
+    cursor: default;
+}
 /*BLOC RESULT*/
 
 #bloc_result {
@@ -250,18 +265,31 @@ thead {
     justify-content: center;
 }
 
-/*INOFBULLES*/
-
-.infobulle {
-    background: none;
+.badge-green{
+  background: #2beb09;
+  color: white;
+  min-width: 50px;
+  padding-right: 20px;
+  height: 35px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align:center;
 }
 
-.infobulle:hover {
-    font-style: italic;
-    font-weight:bolder;
-    z-index: 1;
-    color: lightgray;
-    padding: 3% 10%;
-    cursor: default;
+
+.badge-red{
+  text-color : white;
+  background: #ff0000;
+  color: white;
+  min-width: 50px;
+  padding-right: 20px;
+  height: 35px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align:center;
 }
 
