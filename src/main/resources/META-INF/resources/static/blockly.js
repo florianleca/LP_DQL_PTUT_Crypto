@@ -213,7 +213,6 @@ function injectBlockly() {
 $(document).ready(function () {
     $("#run_test_button").click(function () {
         const test = Blockly.serialization.workspaces.save(workspace);
-        console.log(JSON.stringify(test)); // Garder cette ligne qui peut être pratique pour debug
         clearElements("test_klines_body")
         valideTest();
     });
@@ -277,11 +276,16 @@ function remplirTransactions(json) {
 }
 
 function remplirResult(json) {
-    let variationCrypto = "Le solde de crypto est passé de " + json['previous_crypto'] + " à " + json['new_crypto'] + ".";
-    let variationCurrency = "Le solde de $ est passé de " + json['previous_currency'] + " à " + json['new_currency'] + ".";
-    let valorisation1 = "Au début du test, le porte-feuille était valorisé à " + json['previous_value'] + ".";
-    let valorisation2 = "À la fin du test, le porte-feuille est valorisé à " + json['new_value'] + ".";
-    let result = "Résultat global : " + json['result'];
+    let variationCrypto = "Le solde de crypto est passé de " + json['previous_crypto'] + " à " + Math.round(json['new_crypto'] * 10000000) / 10000000 + ".";
+    let variationCurrency = "Le solde de $ est passé de " + Number(json['previous_currency']).toFixed(2) + " à " + Number(json['new_currency']).toFixed(2) + ".";
+    let valorisation1 = "Au début du test, le porte-feuille était valorisé à " + Number(json['previous_value']).toFixed(2) + ".";
+    let valorisation2 = "À la fin du test, le porte-feuille est valorisé à " + Number(json['new_value']).toFixed(2) + "$.";
+
+    if(json['result'] >= 0){
+        result = "<span class='badge-green'> Résultat global : " + Number(json['result']).toFixed(2) + " $</span>";
+    }else{
+        result = "<span class='badge-red'> Résultat global : " + Number(json['result']).toFixed(2) + " $</span>";
+    }
 
     let resultats = document.getElementById("resultats");
     resultats.innerHTML = variationCrypto + "</br>" + variationCurrency + "</br>" + valorisation1 + "</br>" + valorisation2 + "</br>" + result;
