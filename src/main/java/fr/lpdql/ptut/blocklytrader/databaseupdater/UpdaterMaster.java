@@ -49,6 +49,7 @@ public class UpdaterMaster {
     // Toutes les tables sont mises à jour toutes les heures
     @Scheduled(fixedRate = 3600 * 1000)
     public void updateAll() {
+        collectionSelector.setIsBusy(true);
         logger.info("Database update en cours");
         if (updaters == null) {
             initializeUpdaters();
@@ -63,6 +64,7 @@ public class UpdaterMaster {
             }
         }
         logger.info("Update terminé");
+        collectionSelector.setIsBusy(false);
     }
 
 }
