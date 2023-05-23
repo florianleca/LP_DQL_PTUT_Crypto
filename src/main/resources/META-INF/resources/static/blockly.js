@@ -281,8 +281,13 @@ function remplirResult(json) {
     let variationCurrency = "Le solde de $ est passé de " + json['previous_currency'] + " à " + json['new_currency'] + ".";
     let valorisation1 = "Au début du test, le porte-feuille était valorisé à " + json['previous_value'] + ".";
     let valorisation2 = "À la fin du test, le porte-feuille est valorisé à " + json['new_value'] + ".";
-    let result = "Résultat global : " + json['result'];
-
+    
+    if(json['result'] >= 0){
+        let result = "Résultat global : <span class="label label-success">" + json['result'] . "</span>";
+    }else{
+        let result = "Résultat global : <span class="label label-default">" + json['result'] . "</span>";
+    }
+    
     let resultats = document.getElementById("resultats");
     resultats.innerHTML = variationCrypto + "</br>" + variationCurrency + "</br>" + valorisation1 + "</br>" + valorisation2 + "</br>" + result;
 }
