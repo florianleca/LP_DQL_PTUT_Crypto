@@ -269,7 +269,7 @@ function remplirTransactions(json) {
         $('#test_klines_body').append(
             '<tr class="' +
             pariteLigne(pair) +
-            '"><td>' + date + " : " + bos + document.getElementById("pair1").value.toUpperCase() + " pour " + json[key].currency_amount + " " + document.getElementById("pair2").value.toUpperCase() + "." + "</td>"
+            '"><td>' + date + " : " + bos + document.getElementById("pair1").value.toUpperCase() + " pour " + Number(json[key].currency_amount).toFixed(2) + " " + document.getElementById("pair2").value.toUpperCase() + "." + "</td>"
         )
         pair = !pair
     }
